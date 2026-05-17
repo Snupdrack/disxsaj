@@ -308,9 +308,8 @@ body {
 
       <div class="sel-label">✨ Extras adicionales:</div>
       <div class="extras-grid" id="eg-glorias">
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🧂 Tajín</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Extra Lechera</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🍌 Más Plátano</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)" data-precio="0"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Extra Lechera</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)" data-precio="5"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🍌 Más Plátano (+$5)</span></div>
       </div>
 
       <div class="sel-label">🔢 Cantidad:</div>
@@ -524,8 +523,10 @@ function actualizarResumen() {
   const cg = parseInt(document.getElementById('cant-glorias').textContent);
   if(cg>0){
     const ex = getExtras('eg-glorias');
-    items.push({n: cg+'x Las Glorias'+(ex.length?' + '+ex.join(', '):''), v: cg*P.glorias});
-    total += cg*P.glorias;
+    const extraGlorias = Array.from(document.querySelectorAll('#eg-glorias .extra-item.activo'));
+    const extraPrecio = extraGlorias.reduce((sum,el) => sum + (parseInt(el.dataset.precio)||0), 0);
+    items.push({n: cg+'x Las Glorias'+(ex.length?' + '+ex.join(', '):''), v: cg*P.glorias + extraPrecio});
+    total += cg*P.glorias + extraPrecio;
   }
   const cd = parseInt(document.getElementById('cant-diablito').textContent);
   if(cd>0){
@@ -566,7 +567,9 @@ function enviarWA(){
   }
   if(cg>0){
     const ex=getExtras('eg-glorias');
-    lineas.push('- '+cg+'x Las Glorias (fresa, plátano, leche, lechera)\n  Extras: '+(ex.length?ex.join(', '):'Sin extras adicionales')+'\n  Precio: $'+(cg*P.glorias));
+    const extraGlorias = Array.from(document.querySelectorAll('#eg-glorias .extra-item.activo'));
+    const extraPrecioG = extraGlorias.reduce((sum,el) => sum + (parseInt(el.dataset.precio)||0), 0);
+    lineas.push('- '+cg+'x Las Glorias (fresa, plátano, leche, lechera)\n  Extras: '+(ex.length?ex.join(', '):'Sin extras adicionales')+'\n  Precio: $'+(cg*P.glorias+extraPrecioG));
   }
   if(cd>0){
     const b=document.querySelector('#bd-diablito .sab-btn.base-activo');
@@ -575,7 +578,8 @@ function enviarWA(){
     lineas.push('- '+cd+'x El Diablito (base: '+base+')\n  Extras: '+(ex.length?ex.join(', '):'Sin extras')+'\n  Precio: $'+(cd*P.diablito));
   }
   bots.forEach(b=>{ const n=b.querySelector('.bot-nombre').textContent; lineas.push('- 1x Botana: '+n+'\n  Precio: $'+P.botana); });
-  const total=(cc*P.clasico)+(cg*P.glorias)+(cd*P.diablito)+(bots.length*P.botana);
+  const extraGloriasTotal = Array.from(document.querySelectorAll('#eg-glorias .extra-item.activo')).reduce((sum,el)=>sum+(parseInt(el.dataset.precio)||0),0);
+  const total=(cc*P.clasico)+(cg*P.glorias+extraGloriasTotal)+(cd*P.diablito)+(bots.length*P.botana);
 
   let entrega='';
   if(tipoEntrega==='recoger'){
