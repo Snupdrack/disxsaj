@@ -122,15 +122,15 @@ body {
 .sab-btn.base-activo { background:#fff8e1; border-color:var(--amarillo-dark); color:#7a5f00; }
 
 /* EXTRAS */
-.extras-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:13px; }
-.extra-item { display:flex; align-items:center; gap:8px; background:var(--gris-fondo); border:2px solid #e8e8e8; border-radius:var(--radius-sm); padding:9px 10px; cursor:pointer; transition:.18s; user-select:none; -webkit-user-select:none; }
+.extras-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:13px; }
+.extra-item { display:flex; align-items:center; gap:5px; background:var(--gris-fondo); border:1.5px solid #e8e8e8; border-radius:8px; padding:6px 8px; cursor:pointer; transition:.18s; user-select:none; -webkit-user-select:none; }
 .extra-item:active{transform:scale(.97)}
 .extra-item.activo { background:var(--rojo-light); border-color:var(--rojo); }
-.chk-box { width:20px;height:20px;border-radius:6px;border:2px solid #ccc;background:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.18s; }
+.chk-box { width:16px;height:16px;border-radius:5px;border:1.5px solid #ccc;background:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.18s; }
 .extra-item.activo .chk-box { background:var(--rojo); border-color:var(--rojo); }
 .chk-box svg { display:none; }
 .extra-item.activo .chk-box svg { display:block; }
-.extra-lbl { font-family:'Poppins',sans-serif; font-size:12px; font-weight:600; color:var(--texto); }
+.extra-lbl { font-family:'Poppins',sans-serif; font-size:11px; font-weight:600; color:var(--texto); }
 .extra-item.activo .extra-lbl { color:var(--rojo); }
 
 /* CANTIDAD */
@@ -308,10 +308,9 @@ body {
 
       <div class="sel-label">✨ Extras adicionales:</div>
       <div class="extras-grid" id="eg-glorias">
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🌶️ Chamoy</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🧂 Tajín</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Extra Lechera</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🍌 Más Plátano</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🧂 Tajín</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Extra Lechera</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🍌 Más Plátano</span></div>
       </div>
 
       <div class="sel-label">🔢 Cantidad:</div>
