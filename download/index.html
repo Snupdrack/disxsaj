@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Raspados Didxsaj 🧊</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rojo: #d63031;
+  --rojo-dark: #b71c1c;
+  --rojo-light: #fff0ef;
+  --amarillo: #f1c40f;
+  --amarillo-dark: #c9a500;
+  --amarillo-light: #fffde7;
+  --verde-wa: #25D366;
+  --blanco: #ffffff;
+  --gris-fondo: #f7f8fa;
+  --texto: #1a1a2e;
+  --texto-muted: #666;
+  --texto-light: #999;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-pill: 100px;
+  --sombra-card: 0 2px 16px rgba(214,48,49,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--gris-fondo);
+  color: var(--texto);
+  max-width: 430px;
+  margin: 0 auto;
+  padding-bottom: 90px;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #d63031 0%, #e74c3c 45%, #f39c12 100%);
+  padding: 30px 20px 26px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bubble { position:absolute; border-radius:50%; background:rgba(255,255,255,0.08); }
+.hero-bubble:nth-child(1){width:180px;height:180px;top:-60px;right:-50px;}
+.hero-bubble:nth-child(2){width:120px;height:120px;bottom:-40px;left:-30px;}
+.hero-bubble:nth-child(3){width:70px;height:70px;top:20px;left:25px;opacity:.5;}
+
+.logo-ring {
+  width:136px; height:136px; border-radius:50%;
+  border:4px solid rgba(255,255,255,.88);
+  overflow:hidden; margin:0 auto 14px;
+  background:white;
+  box-shadow:0 8px 28px rgba(0,0,0,.22);
+  position:relative; z-index:1;
+  display:flex; align-items:center; justify-content:center;
+}
+.logo-ring img { width:100%; height:100%; object-fit:cover; display:block; }
+.logo-fallback {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  width:100%; height:100%;
+  font-family:'Fredoka One',cursive; text-align:center;
+}
+.logo-fallback .lf-icon { font-size:40px; }
+.logo-fallback .lf-txt { font-size:11px; color:var(--rojo); line-height:1.25; margin-top:4px; }
+
+.hero-nombre { font-family:'Fredoka One',cursive; font-size:30px; color:white; line-height:1; text-shadow:0 2px 8px rgba(0,0,0,.22); position:relative;z-index:1; margin-bottom:3px; }
+.hero-sub { font-family:'Fredoka One',cursive; font-size:13px; color:rgba(255,255,255,.82); margin-bottom:15px; position:relative;z-index:1; letter-spacing:1px; text-transform:uppercase; }
+
+.delivery-banner {
+  background:var(--amarillo); color:#5a3a00;
+  font-family:'Poppins',sans-serif; font-weight:800; font-size:12px;
+  padding:10px 18px; border-radius:var(--radius-pill);
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 4px 14px rgba(0,0,0,.18);
+  position:relative;z-index:1;
+  animation:pulseBadge 2.5s ease-in-out infinite;
+}
+@keyframes pulseBadge { 0%,100%{transform:scale(1)} 50%{transform:scale(1.035)} }
+.glass-tag {
+  background:rgba(255,255,255,.15); backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.25); border-radius:var(--radius-pill);
+  padding:7px 16px; margin-top:12px; display:inline-flex; align-items:center; gap:6px;
+  color:white; font-family:'Poppins',sans-serif; font-size:11.5px; font-weight:600;
+  position:relative;z-index:1;
+}
+.divider-strip { height:5px; background:linear-gradient(90deg,var(--rojo),var(--amarillo),var(--rojo)); opacity:.18; }
+
+/* SECCIONES */
+.seccion { padding:0 14px; margin-top:20px; }
+.sec-titulo { font-family:'Fredoka One',cursive; font-size:21px; color:var(--rojo); margin-bottom:12px; display:flex; align-items:center; gap:7px; }
+
+/* CARDS */
+.card { background:white; border-radius:var(--radius); box-shadow:var(--sombra-card); overflow:hidden; margin-bottom:16px; border:1.5px solid rgba(214,48,49,.08); }
+.card-foto { width:100%; height:200px; object-fit:cover; display:block; }
+.card-foto-ph {
+  width:100%; height:200px;
+  background:linear-gradient(135deg,#ffeaea,#fff8e1);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  font-size:44px; gap:8px;
+}
+.card-foto-ph p { font-family:'Poppins',sans-serif; font-size:12px; color:var(--texto-muted); font-weight:600; }
+.card-body { padding:15px; }
+
+.prod-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; }
+.prod-nombre { font-family:'Fredoka One',cursive; font-size:21px; color:var(--texto); line-height:1.2; }
+.precio-badge { background:var(--rojo); color:white; font-family:'Poppins',sans-serif; font-weight:800; font-size:16px; padding:4px 12px; border-radius:var(--radius-pill); white-space:nowrap; box-shadow:0 2px 8px rgba(214,48,49,.28); flex-shrink:0; }
+.prod-desc { font-size:13.5px; color:var(--texto-muted); line-height:1.55; margin-bottom:13px; }
+
+.chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:13px; }
+.chip { background:var(--rojo-light); color:var(--rojo-dark); font-size:11.5px; font-weight:600; padding:4px 10px; border-radius:var(--radius-pill); font-family:'Poppins',sans-serif; }
+.chip.y { background:var(--amarillo-light); color:#7a5f00; }
+
+.sel-label { font-family:'Poppins',sans-serif; font-weight:700; font-size:12.5px; color:var(--texto); margin-bottom:8px; }
+
+/* SABORES */
+.sabores-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-bottom:13px; }
+.sab-btn { background:var(--gris-fondo); border:2px solid #e8e8e8; border-radius:var(--radius-sm); padding:9px 4px; font-family:'Poppins',sans-serif; font-size:11.5px; font-weight:600; color:var(--texto-muted); cursor:pointer; text-align:center; transition:.18s; line-height:1.35; }
+.sab-btn:active{transform:scale(.95)}
+.sab-btn.activo { background:var(--rojo-light); border-color:var(--rojo); color:var(--rojo); }
+.sab-btn.base-activo { background:#fff8e1; border-color:var(--amarillo-dark); color:#7a5f00; }
+
+/* EXTRAS */
+.extras-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:13px; }
+.extra-item { display:flex; align-items:center; gap:8px; background:var(--gris-fondo); border:2px solid #e8e8e8; border-radius:var(--radius-sm); padding:9px 10px; cursor:pointer; transition:.18s; user-select:none; -webkit-user-select:none; }
+.extra-item:active{transform:scale(.97)}
+.extra-item.activo { background:var(--rojo-light); border-color:var(--rojo); }
+.chk-box { width:20px;height:20px;border-radius:6px;border:2px solid #ccc;background:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.18s; }
+.extra-item.activo .chk-box { background:var(--rojo); border-color:var(--rojo); }
+.chk-box svg { display:none; }
+.extra-item.activo .chk-box svg { display:block; }
+.extra-lbl { font-family:'Poppins',sans-serif; font-size:12px; font-weight:600; color:var(--texto); }
+.extra-item.activo .extra-lbl { color:var(--rojo); }
+
+/* CANTIDAD */
+.cant-row { display:flex; align-items:center; gap:12px; margin-bottom:13px; }
+.cant-btn { width:36px;height:36px;border-radius:50%;border:2px solid var(--rojo);background:white;color:var(--rojo);font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;line-height:1; }
+.cant-btn:active{background:var(--rojo);color:white;transform:scale(.92)}
+.cant-num { font-family:'Fredoka One',cursive;font-size:22px;color:var(--texto);min-width:22px;text-align:center; }
+.cant-lbl { font-family:'Poppins',sans-serif;font-size:12px;color:var(--texto-muted); }
+
+/* BOTANAS */
+.botanas-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+.bot-card { background:var(--gris-fondo);border:2px solid #e8e8e8;border-radius:var(--radius-sm);padding:12px 8px;text-align:center;cursor:pointer;transition:.18s;user-select:none;-webkit-user-select:none; }
+.bot-card:active{transform:scale(.96)}
+.bot-card.activo{background:var(--amarillo-light);border-color:var(--amarillo-dark);}
+.bot-emoji{font-size:26px;margin-bottom:4px;}
+.bot-nombre{font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;color:var(--texto);margin-bottom:2px;}
+.bot-card.activo .bot-nombre{color:#7a5f00;}
+.bot-precio{font-family:'Poppins',sans-serif;font-size:11px;color:var(--texto-muted);font-weight:600;}
+.bot-card.activo .bot-precio{color:var(--amarillo-dark);}
+
+/* ENTREGA */
+.entrega-box { background:white;border-radius:var(--radius);box-shadow:var(--sombra-card);padding:15px;margin-bottom:16px;border:1.5px solid rgba(214,48,49,.08); }
+.entrega-tit { font-family:'Poppins',sans-serif;font-weight:700;font-size:13.5px;color:var(--texto);margin-bottom:11px; }
+.toggle-opts { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px; }
+.tog-opt { border:2px solid #e8e8e8;border-radius:var(--radius-sm);padding:11px 8px;text-align:center;cursor:pointer;transition:.18s;user-select:none;-webkit-user-select:none; }
+.tog-opt:active{transform:scale(.97)}
+.tog-opt.activo{border-color:var(--rojo);background:var(--rojo-light);}
+.tog-icon{font-size:22px;margin-bottom:3px;}
+.tog-label{font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;color:var(--texto-muted);}
+.tog-opt.activo .tog-label{color:var(--rojo);}
+
+.campos-dom{display:none;}
+.campos-dom.visible{display:block;}
+.inp-group{margin-bottom:10px;}
+.inp-label{font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;color:var(--texto-muted);margin-bottom:5px;display:block;}
+.inp-field{width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:14px;color:var(--texto);background:var(--gris-fondo);outline:none;transition:border-color .18s;}
+.inp-field:focus{border-color:var(--rojo);background:white;}
+.inp-field::placeholder{color:#bbb;}
+
+/* CAMBIO */
+.cambio-box{background:white;border-radius:var(--radius);box-shadow:0 2px 12px rgba(241,196,15,.18);padding:15px;margin-bottom:16px;border:1.5px solid rgba(241,196,15,.28);}
+.cambio-tit{font-family:'Poppins',sans-serif;font-weight:700;font-size:13.5px;color:var(--texto);margin-bottom:3px;}
+.cambio-hint{font-size:12px;color:var(--texto-muted);margin-bottom:9px;}
+
+/* RESUMEN */
+.resumen-box{background:white;border-radius:var(--radius);box-shadow:var(--sombra-card);padding:15px;margin-bottom:14px;border:1.5px solid rgba(214,48,49,.08);}
+.res-titulo{font-family:'Fredoka One',cursive;font-size:18px;color:var(--rojo);margin-bottom:9px;}
+.res-linea{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed #f0f0f0;font-size:12.5px;}
+.res-linea:last-of-type{border-bottom:none;}
+.res-nom{color:var(--texto-muted);}
+.res-val{font-weight:700;color:var(--texto);}
+.res-total{display:flex;justify-content:space-between;align-items:center;margin-top:9px;padding-top:9px;border-top:2px solid var(--rojo-light);}
+.res-tot-lbl{font-family:'Fredoka One',cursive;font-size:17px;color:var(--texto);}
+.res-tot-val{font-family:'Fredoka One',cursive;font-size:24px;color:var(--rojo);}
+
+/* BOTÓN WA */
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--verde-wa);color:white;font-family:'Poppins',sans-serif;font-weight:800;font-size:15.5px;padding:17px 20px;border-radius:var(--radius);border:none;cursor:pointer;box-shadow:0 6px 20px rgba(37,211,102,.35);transition:.18s;text-decoration:none;letter-spacing:.2px;}
+.btn-wa:active{transform:scale(.97);box-shadow:0 3px 10px rgba(37,211,102,.3);}
+
+/* UBICACIÓN */
+.ubic-box{background:white;border-radius:var(--radius);box-shadow:var(--sombra-card);padding:16px;margin-bottom:16px;border:1.5px solid rgba(214,48,49,.08);}
+.ubic-tit{font-family:'Fredoka One',cursive;font-size:19px;color:var(--texto);margin-bottom:6px;}
+.ubic-tag{display:inline-flex;align-items:center;gap:5px;background:var(--amarillo-light);border:1.5px solid var(--amarillo-dark);color:#7a5f00;font-family:'Poppins',sans-serif;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:var(--radius-pill);margin-bottom:11px;}
+.ubic-dir{font-size:13.5px;color:var(--texto-muted);line-height:1.6;margin-bottom:13px;}
+.btn-maps{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--rojo);color:white;font-family:'Poppins',sans-serif;font-weight:700;font-size:14px;padding:13px 20px;border-radius:var(--radius-sm);border:none;cursor:pointer;text-decoration:none;box-shadow:0 4px 14px rgba(214,48,49,.28);transition:.18s;}
+.btn-maps:active{transform:scale(.97);}
+
+.footer{text-align:center;padding:18px 16px 0;font-size:12px;color:var(--texto-light);}
+
+/* BADGE ESPECIAL */
+.badge-spec{background:var(--amarillo);color:#5a3a00;font-family:'Poppins',sans-serif;font-weight:800;font-size:11px;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:7px;}
+.badge-hot{background:var(--rojo);color:white;font-family:'Poppins',sans-serif;font-weight:800;font-size:11px;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:7px;}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bubble"></div>
+  <div class="hero-bubble"></div>
+  <div class="hero-bubble"></div>
+
+  <div class="logo-ring">
+    <img src="logo.png" alt="Raspados Didxsaj"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+    <div class="logo-fallback" style="display:none;">
+      <div class="lf-icon">🧊</div>
+      <div class="lf-txt">RASPADOS<br>DIDXSAJ</div>
+    </div>
+  </div>
+
+  <div class="hero-nombre">Raspados Didxsaj</div>
+  <div class="hero-sub">⭐ El sabor de Oaxaca ⭐</div>
+
+  <div class="delivery-banner">
+    🛵 ¡SERVICIO A DOMICILIO DISPONIBLE! 🛵
+  </div>
+
+  <div class="glass-tag">
+    ⏰ Pide ahora · Entrega rápida en tu zona
+  </div>
+</div>
+
+<div class="divider-strip"></div>
+
+<!-- ═══ RASPADOS CLÁSICOS ═══ -->
+<div class="seccion">
+  <div class="sec-titulo">🧊 Raspados Clásicos</div>
+
+  <img class="card-foto" src="raspadoclasico.jpeg" alt="Raspado Clásico">
+    <div class="card-body">
+      <div class="prod-header">
+        <div class="prod-nombre">Raspado Clásico</div>
+        <div class="precio-badge" id="precio-clasico">$25</div>
+      </div>
+      <p class="prod-desc">Hielo raspado fino empapado en el sabor que elijas. El original, el que nunca falla. Fresco, natural y bien cargado. 🧊</p>
+      <div class="chips">
+        <span class="chip">🍓 Frescos</span>
+        <span class="chip">🍋 Ácidos</span>
+        <span class="chip y">🌿 Regionales</span>
+      </div>
+
+      <div class="sel-label">🎨 Elige tu sabor:</div>
+      <div class="sabores-grid" id="sg-clasico">
+        <button class="sab-btn" onclick="selSabor(this,'clasico')">🍓<br>Fresa</button>
+        <button class="sab-btn" onclick="selSabor(this,'clasico')">🍋<br>Limón</button>
+        <button class="sab-btn" onclick="selSabor(this,'clasico')">🍍<br>Piña</button>
+        <button class="sab-btn" onclick="selSabor(this,'clasico')">🫐<br>Mora azul</button>
+        <button class="sab-btn" onclick="selSabor(this,'clasico')">🌿<br>Nanche</button>
+      </div>
+
+      <div class="sel-label">✨ Extras (acumulables):</div>
+      <div class="extras-grid" id="eg-clasico">
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🌶️ Chamoy</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🔥 Salsa</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🧂 Tajín</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Lechera</span></div>
+      </div>
+
+      <div class="sel-label">🔢 Cantidad:</div>
+      <div class="cant-row">
+        <button class="cant-btn" onclick="cambiarCant('clasico',-1)">−</button>
+        <span class="cant-num" id="cant-clasico">1</span>
+        <button class="cant-btn" onclick="cambiarCant('clasico',1)">+</button>
+        <span class="cant-lbl">raspado(s)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LAS GLORIAS ═══ -->
+<div class="seccion">
+  <div class="sec-titulo">⭐ Especial de la Casa</div>
+
+  <div class="card" style="border-color:rgba(241,196,15,.4)">
+    <img class="card-foto" src="glorias2.jpeg" alt="Las Glorias"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+    <div class="card-foto-ph" style="display:none;background:linear-gradient(135deg,#fff8e1,#ffeaea)">
+      <div>🍌✨🥛</div>
+      <p>Las Glorias — foto próximamente</p>
+    </div>
+    <div class="card-body">
+      <div class="badge-spec">⭐ GOURMET</div>
+      <div class="prod-header">
+        <div class="prod-nombre">Las Glorias</div>
+        <div class="precio-badge" id="precio-glorias">$27</div>
+      </div>
+      <p class="prod-desc">Nuestro raspado estrella. Base de hielo con sabor a <strong>fresa</strong>, coronado con <strong>plátano</strong> rebanado, bañado en <strong>leche</strong> y <strong>lechera</strong>. Una experiencia cremosa, dulce y única que tienes que probar. 💛</p>
+      <div class="chips">
+        <span class="chip y">🍓 Fresa</span>
+        <span class="chip y">🍌 Plátano</span>
+        <span class="chip y">🥛 Leche</span>
+        <span class="chip y">🥛 Lechera</span>
+      </div>
+
+      <div class="sel-label">✨ Extras adicionales:</div>
+      <div class="extras-grid" id="eg-glorias">
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🌶️ Chamoy</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🧂 Tajín</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Extra Lechera</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🍌 Más Plátano</span></div>
+      </div>
+
+      <div class="sel-label">🔢 Cantidad:</div>
+      <div class="cant-row">
+        <button class="cant-btn" onclick="cambiarCant('glorias',-1)">−</button>
+        <span class="cant-num" id="cant-glorias">0</span>
+        <button class="cant-btn" onclick="cambiarCant('glorias',1)">+</button>
+        <span class="cant-lbl">raspado(s)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EL DIABLITO ═══ -->
+<div class="seccion">
+  <div class="sec-titulo">😈 El Diablito</div>
+
+  <img class="card-foto" src="diablito.jpeg" alt="El Diablito">
+    <div class="card-body">
+      <div class="badge-hot">🔥 PICANTE</div>
+      <div class="prod-header">
+        <div class="prod-nombre">El Diablito</div>
+        <div class="precio-badge" id="precio-diablito">$27</div>
+      </div>
+      <p class="prod-desc">Para los que no le tienen miedo al picante. Hielo con tu base favorita, cargado con <strong>chamoy</strong>, <strong>salsa botanera</strong> y una buena capa de <strong>Tajín</strong>. Dulce, ácido y ardiente. ¡Solo para valientes! 😈</p>
+      <div class="chips">
+        <span class="chip">🌶️ Chamoy</span>
+        <span class="chip">🔥 Salsa botanera</span>
+        <span class="chip">🧂 Tajín</span>
+      </div>
+
+      <div class="sel-label">🫙 Elige tu base:</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:13px" id="bd-diablito">
+        <button class="sab-btn" onclick="selBase(this)" style="padding:12px 4px">🫙<br>Tamarindo</button>
+        <button class="sab-btn" onclick="selBase(this)" style="padding:12px 4px">🌿<br>Nanche</button>
+        <button class="sab-btn" onclick="selBase(this)" style="padding:12px 4px">🍑<br>Durazno</button>
+      </div>
+
+      <div class="sel-label">🔥 Extras picosos:</div>
+      <div class="extras-grid" id="eg-diablito">
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🌶️ Doble Chamoy</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🔥 Más Salsa botanera</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🧂 Extra Tajín</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Con Lechera</span></div>
+      </div>
+
+      <div class="sel-label">🔢 Cantidad:</div>
+      <div class="cant-row">
+        <button class="cant-btn" onclick="cambiarCant('diablito',-1)">−</button>
+        <span class="cant-num" id="cant-diablito">0</span>
+        <button class="cant-btn" onclick="cambiarCant('diablito',1)">+</button>
+        <span class="cant-lbl">raspado(s)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BOTANAS ═══ -->
+<div class="seccion">
+  <div class="sec-titulo">🍿 Botanas y Antojos</div>
+  <div class="card">
+    <div class="card-body">
+      <p class="prod-desc" style="margin-bottom:13px">El complemento perfecto para tu raspado. Todos a solo <strong style="color:var(--rojo)">$<span id="precio-botana">12</span></strong> 🤌</p>
+      <div class="botanas-grid" id="botanas-grid">
+        <div class="bot-card" onclick="toggleBotana(this,'Papas')"><div class="bot-emoji">🥔</div><div class="bot-nombre">Papas</div><div class="bot-precio">$12</div></div>
+        <div class="bot-card" onclick="toggleBotana(this,'Chicharrones')"><div class="bot-emoji">🫳</div><div class="bot-nombre">Chicharrones</div><div class="bot-precio">$12</div></div>
+        <div class="bot-card" onclick="toggleBotana(this,'Hojuelas')"><div class="bot-emoji">🌾</div><div class="bot-nombre">Hojuelas</div><div class="bot-precio">$12</div></div>
+        <div class="bot-card" onclick="toggleBotana(this,'Cacahuates')"><div class="bot-emoji">🥜</div><div class="bot-nombre">Cacahuates</div><div class="bot-precio">$12</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TIPO DE ENTREGA ═══ -->
+<div class="seccion">
+  <div class="sec-titulo">📦 Tipo de entrega</div>
+  <div class="entrega-box">
+    <div class="entrega-tit">¿Cómo quieres recibir tu pedido?</div>
+    <div class="toggle-opts">
+      <div class="tog-opt activo" id="opt-recoger" onclick="setEntrega('recoger')">
+        <div class="tog-icon">🏪</div>
+        <div class="tog-label">Pasar a recoger</div>
+      </div>
+      <div class="tog-opt" id="opt-domicilio" onclick="setEntrega('domicilio')">
+        <div class="tog-icon">🛵</div>
+        <div class="tog-label">A domicilio</div>
+      </div>
+    </div>
+    <div class="campos-dom" id="campos-dom">
+      <div class="inp-group">
+        <label class="inp-label">📍 Dirección completa (calle, número, colonia)</label>
+        <input class="inp-field" type="text" id="inp-dir" placeholder="Ej: Calle Juárez 45, Col. Centro">
+      </div>
+      <div class="inp-group">
+        <label class="inp-label">🔍 Referencias para el repartidor</label>
+        <textarea class="inp-field" id="inp-ref" rows="2" placeholder="Ej: Casa azul, junto al OXXO" style="resize:none"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CAMBIO ═══ -->
+<div class="seccion">
+  <div class="cambio-box">
+    <div class="cambio-tit">💵 ¿Con cuánto vas a pagar?</div>
+    <div class="cambio-hint">Opcional — ayuda al repartidor a llevar el cambio exacto.</div>
+    <input class="inp-field" type="text" id="inp-pago" placeholder="Ej: Pago con billete de $200">
+  </div>
+</div>
+
+<!-- ═══ RESUMEN ═══ -->
+<div class="seccion">
+  <div class="resumen-box">
+    <div class="res-titulo">🧾 Tu pedido</div>
+    <div id="res-items">
+      <div class="res-linea"><span class="res-nom" style="color:#bbb;font-style:italic">Aún no has elegido nada...</span><span class="res-val"></span></div>
+    </div>
+    <div class="res-total">
+      <span class="res-tot-lbl">Total estimado:</span>
+      <span class="res-tot-val" id="total-val">$0</span>
+    </div>
+  </div>
+
+  <button class="btn-wa" onclick="enviarWA()">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    Enviar pedido por WhatsApp
+  </button>
+</div>
+
+<!-- ═══ UBICACIÓN ═══ -->
+<div class="seccion" style="margin-top:22px">
+  <div class="sec-titulo">📍 Encuéntranos</div>
+  <div class="ubic-box">
+    <div class="ubic-tit">🏠 Nuestra ubicación</div>
+    <div class="ubic-tag">⏰ Pregunta por nuestros horarios</div>
+    <div class="ubic-dir">
+      <strong>Calle Primera Cerrada de Las Salinas #7</strong><br>
+      Juchitán de Zaragoza, Oaxaca<br>
+      <span style="color:var(--rojo);font-weight:600">📌 Cerca del campo de fútbol</span>
+    </div>
+    <a class="btn-maps"
+       href="https://www.google.com/maps/search/Calle+Primera+Cerrada+de+Las+Salinas+7+Juchitan+de+Zaragoza+Oaxaca"
+       target="_blank" rel="noopener">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Ver en Google Maps
+    </a>
+  </div>
+</div>
+
+<div class="footer">Hecho con ❤️ para Raspados Didxsaj · Juchitán, Oaxaca</div>
+
+<script>
+// ── PRECIOS EDITABLES ──
+const P = { clasico:25, glorias:27, diablito:27, botana:12 };
+
+// Aplicar precios al DOM
+document.getElementById('precio-clasico').textContent  = '$'+P.clasico;
+document.getElementById('precio-glorias').textContent  = '$'+P.glorias;
+document.getElementById('precio-diablito').textContent = '$'+P.diablito;
+document.getElementById('precio-botana').textContent   = P.botana;
+document.querySelectorAll('.bot-precio').forEach(el=>el.textContent='$'+P.botana);
+
+let tipoEntrega = 'recoger';
+
+function selSabor(btn, prod) {
+  document.querySelectorAll('#sg-'+prod+' .sab-btn').forEach(b=>b.classList.remove('activo'));
+  btn.classList.add('activo');
+  actualizarResumen();
+}
+function selBase(btn) {
+  document.querySelectorAll('#bd-diablito .sab-btn').forEach(b=>b.classList.remove('base-activo','activo'));
+  btn.classList.add('base-activo');
+  actualizarResumen();
+}
+function toggleExtra(el) { el.classList.toggle('activo'); actualizarResumen(); }
+
+function cambiarCant(prod, d) {
+  const el = document.getElementById('cant-'+prod);
+  let v = parseInt(el.textContent)+d;
+  if(v<0) v=0;
+  el.textContent = v;
+  actualizarResumen();
+}
+function toggleBotana(el, nombre) { el.classList.toggle('activo'); actualizarResumen(); }
+
+function setEntrega(tipo) {
+  tipoEntrega = tipo;
+  document.getElementById('opt-recoger').classList.toggle('activo', tipo==='recoger');
+  document.getElementById('opt-domicilio').classList.toggle('activo', tipo==='domicilio');
+  document.getElementById('campos-dom').classList.toggle('visible', tipo==='domicilio');
+}
+
+function getExtras(id) {
+  return Array.from(document.querySelectorAll('#'+id+' .extra-item.activo'))
+    .map(e=>e.querySelector('.extra-lbl').textContent.trim());
+}
+function getSabor(id) {
+  const a = document.querySelector('#'+id+' .sab-btn.activo');
+  return a ? a.textContent.replace(/\n/g,'').trim() : '';
+}
+
+function actualizarResumen() {
+  const items = []; let total = 0;
+  const cc = parseInt(document.getElementById('cant-clasico').textContent);
+  if(cc>0){
+    const s = getSabor('sg-clasico') || '(sin sabor)';
+    const ex = getExtras('eg-clasico');
+    items.push({n: cc+'x Clásico '+s+(ex.length?' + '+ex.join(', '):''), v: cc*P.clasico});
+    total += cc*P.clasico;
+  }
+  const cg = parseInt(document.getElementById('cant-glorias').textContent);
+  if(cg>0){
+    const ex = getExtras('eg-glorias');
+    items.push({n: cg+'x Las Glorias'+(ex.length?' + '+ex.join(', '):''), v: cg*P.glorias});
+    total += cg*P.glorias;
+  }
+  const cd = parseInt(document.getElementById('cant-diablito').textContent);
+  if(cd>0){
+    const b = document.querySelector('#bd-diablito .sab-btn.base-activo');
+    const base = b ? b.textContent.replace(/\n/g,'').trim() : '(sin base)';
+    const ex = getExtras('eg-diablito');
+    items.push({n: cd+'x Diablito ('+base+')'+(ex.length?' + '+ex.join(', '):''), v: cd*P.diablito});
+    total += cd*P.diablito;
+  }
+  const bots = Array.from(document.querySelectorAll('#botanas-grid .bot-card.activo'));
+  bots.forEach(b=>{
+    const n = b.querySelector('.bot-nombre').textContent;
+    items.push({n:'1x Botana: '+n, v:P.botana});
+    total += P.botana;
+  });
+  const cont = document.getElementById('res-items');
+  if(!items.length){
+    cont.innerHTML='<div class="res-linea"><span class="res-nom" style="color:#bbb;font-style:italic">Aún no has elegido nada...</span><span class="res-val"></span></div>';
+  } else {
+    cont.innerHTML=items.map(i=>'<div class="res-linea"><span class="res-nom">'+i.n+'</span><span class="res-val">$'+i.v+'</span></div>').join('');
+  }
+  document.getElementById('total-val').textContent='$'+total;
+}
+
+function enviarWA(){
+  const NUMERO='9512645961';
+  const cc=parseInt(document.getElementById('cant-clasico').textContent);
+  const cg=parseInt(document.getElementById('cant-glorias').textContent);
+  const cd=parseInt(document.getElementById('cant-diablito').textContent);
+  const bots=Array.from(document.querySelectorAll('#botanas-grid .bot-card.activo'));
+  if(!cc&&!cg&&!cd&&!bots.length){ alert('😅 ¡Elige al menos un producto antes de enviar tu pedido!'); return; }
+
+  const lineas=[];
+  if(cc>0){
+    const s=getSabor('sg-clasico')||'sin especificar';
+    const ex=getExtras('eg-clasico');
+    lineas.push('- '+cc+'x Raspado Clásico sabor '+s+'\n  Extras: '+(ex.length?ex.join(', '):'Sin extras')+'\n  Precio: $'+(cc*P.clasico));
+  }
+  if(cg>0){
+    const ex=getExtras('eg-glorias');
+    lineas.push('- '+cg+'x Las Glorias (fresa, plátano, leche, lechera)\n  Extras: '+(ex.length?ex.join(', '):'Sin extras adicionales')+'\n  Precio: $'+(cg*P.glorias));
+  }
+  if(cd>0){
+    const b=document.querySelector('#bd-diablito .sab-btn.base-activo');
+    const base=b?b.textContent.replace(/\n/g,'').trim():'sin especificar';
+    const ex=getExtras('eg-diablito');
+    lineas.push('- '+cd+'x El Diablito (base: '+base+')\n  Extras: '+(ex.length?ex.join(', '):'Sin extras')+'\n  Precio: $'+(cd*P.diablito));
+  }
+  bots.forEach(b=>{ const n=b.querySelector('.bot-nombre').textContent; lineas.push('- 1x Botana: '+n+'\n  Precio: $'+P.botana); });
+  const total=(cc*P.clasico)+(cg*P.glorias)+(cd*P.diablito)+(bots.length*P.botana);
+
+  let entrega='';
+  if(tipoEntrega==='recoger'){
+    entrega='🏪 TIPO DE ENTREGA: Paso a recoger en tu local';
+  } else {
+    const dir=document.getElementById('inp-dir').value.trim();
+    const ref=document.getElementById('inp-ref').value.trim();
+    if(!dir){ alert('📍 Por favor escribe tu dirección completa.'); return; }
+    entrega='🛵 TIPO DE ENTREGA: Envío a Domicilio\n📍 Dirección: '+dir+'\n🔍 Referencias: '+(ref||'Sin referencias');
+  }
+  const pago=document.getElementById('inp-pago').value.trim();
+  const msg='¡Hola Raspados Didxsaj! 👋 Me gustaría hacer el siguiente pedido:\n\n'
+    +lineas.join('\n\n')+'\n\n'+entrega
+    +(pago?'\n💵 Pago con: '+pago:'')
+    +'\n\n💰 *TOTAL ESTIMADO: $'+total+'*\n\n¡Muchas gracias! 🧊😋';
+  window.open('https://wa.me/52'+NUMERO+'?text='+encodeURIComponent(msg),'_blank');
+}
+</script>
+</body>
+</html>
