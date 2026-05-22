@@ -203,6 +203,76 @@ body {
 /* BADGE ESPECIAL */
 .badge-spec{background:var(--amarillo);color:#5a3a00;font-family:'Poppins',sans-serif;font-weight:800;font-size:11px;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:7px;}
 .badge-hot{background:var(--rojo);color:white;font-family:'Poppins',sans-serif;font-weight:800;font-size:11px;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:7px;}
+
+/* ═══ ADMIN LOGIN ═══ */
+.admin-btn {
+  position:fixed; bottom:18px; right:18px; z-index:100;
+  width:46px; height:46px; border-radius:50%;
+  background:var(--rojo-dark); color:white; border:none;
+  font-size:20px; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.3);
+  display:flex; align-items:center; justify-content:center;
+  transition:.18s;
+}
+.admin-btn:active{transform:scale(.9)}
+.admin-btn.logged-in{background:var(--verde-wa)}
+
+.admin-overlay {
+  display:none; position:fixed; inset:0; z-index:200;
+  background:rgba(0,0,0,.55); backdrop-filter:blur(4px);
+  align-items:center; justify-content:center;
+}
+.admin-overlay.visible { display:flex; }
+
+.admin-modal {
+  background:white; border-radius:var(--radius); padding:28px 22px;
+  width:90%; max-width:340px; box-shadow:0 12px 40px rgba(0,0,0,.3);
+  text-align:center;
+}
+.admin-modal h2 { font-family:'Fredoka One',cursive; font-size:22px; color:var(--rojo); margin-bottom:5px; }
+.admin-modal p { font-size:13px; color:var(--texto-muted); margin-bottom:18px; }
+.admin-modal .inp-field { margin-bottom:12px; text-align:center; font-size:16px; letter-spacing:4px; }
+.admin-modal .btn-admin-login {
+  width:100%; padding:13px; border:none; border-radius:var(--radius-sm);
+  background:var(--rojo); color:white; font-family:'Poppins',sans-serif;
+  font-weight:800; font-size:15px; cursor:pointer; transition:.18s;
+}
+.admin-modal .btn-admin-login:active{transform:scale(.97)}
+.admin-modal .btn-admin-close {
+  margin-top:10px; background:none; border:none; color:var(--texto-muted);
+  font-size:13px; cursor:pointer; font-family:'Poppins',sans-serif; font-weight:600;
+}
+.admin-error { color:var(--rojo); font-size:12px; font-weight:600; margin-bottom:8px; display:none; }
+
+/* ADMIN PANEL */
+.admin-panel {
+  display:none; background:var(--rojo-light); border:2px solid var(--rojo);
+  border-radius:var(--radius); padding:18px; margin-bottom:16px;
+}
+.admin-panel.visible { display:block; }
+.admin-panel h3 { font-family:'Fredoka One',cursive; font-size:17px; color:var(--rojo); margin-bottom:12px; }
+.admin-price-row {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:8px;
+}
+.admin-price-row label { font-family:'Poppins',sans-serif; font-size:13px; font-weight:700; color:var(--texto); }
+.admin-price-row input {
+  width:80px; padding:7px 10px; border:1.5px solid var(--rojo); border-radius:8px;
+  font-family:'Poppins',sans-serif; font-size:14px; font-weight:700; color:var(--rojo);
+  text-align:center; background:white;
+}
+.btn-save-admin {
+  width:100%; padding:12px; border:none; border-radius:var(--radius-sm);
+  background:var(--rojo); color:white; font-family:'Poppins',sans-serif;
+  font-weight:800; font-size:14px; cursor:pointer; margin-top:6px; transition:.18s;
+}
+.btn-save-admin:active{transform:scale(.97)}
+.btn-logout-admin {
+  width:100%; padding:10px; border:1.5px solid var(--rojo); border-radius:var(--radius-sm);
+  background:white; color:var(--rojo); font-family:'Poppins',sans-serif;
+  font-weight:700; font-size:13px; cursor:pointer; margin-top:8px; transition:.18s;
+}
+.btn-logout-admin:active{transform:scale(.97)}
+.admin-saved { color:var(--verde-wa); font-weight:700; font-size:12px; margin-top:6px; display:none; }
 </style>
 </head>
 <body>
@@ -236,6 +306,36 @@ body {
 
 <div class="divider-strip"></div>
 
+<!-- ═══ ADMIN PANEL (visible solo cuando está logueado) ═══ -->
+<div class="seccion" id="admin-section" style="display:none">
+  <div class="admin-panel visible">
+    <h3>⚙️ Modo Administrador</h3>
+    <div class="admin-price-row">
+      <label>Raspado Clásico</label>
+      <input type="number" id="admin-clasico" min="0">
+    </div>
+    <div class="admin-price-row">
+      <label>Las Glorias</label>
+      <input type="number" id="admin-glorias" min="0">
+    </div>
+    <div class="admin-price-row">
+      <label>El Diablito</label>
+      <input type="number" id="admin-diablito" min="0">
+    </div>
+    <div class="admin-price-row">
+      <label>Botana</label>
+      <input type="number" id="admin-botana" min="0">
+    </div>
+    <div class="admin-price-row">
+      <label>Costo por extra</label>
+      <input type="number" id="admin-extra" min="0">
+    </div>
+    <button class="btn-save-admin" onclick="guardarPrecios()">💾 Guardar precios</button>
+    <div class="admin-saved" id="admin-saved-msg">✅ ¡Precios guardados!</div>
+    <button class="btn-logout-admin" onclick="logoutAdmin()">🔒 Cerrar sesión admin</button>
+  </div>
+</div>
+
 <!-- ═══ RASPADOS CLÁSICOS ═══ -->
 <div class="seccion">
   <div class="sec-titulo">🧊 Raspados Clásicos</div>
@@ -262,12 +362,12 @@ body {
         <button class="sab-btn" onclick="selSabor(this,'clasico')">🌿<br>Nanche</button>
       </div>
 
-      <div class="sel-label">✨ Extras (acumulables):</div>
+      <div class="sel-label">✨ Extras (+$2 c/u):</div>
       <div class="extras-grid" id="eg-clasico">
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🌶️ Chamoy</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🔥 Salsa</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🧂 Tajín</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Lechera</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🌶️ Chamoy</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🔥 Salsa</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🧂 Tajín</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Lechera</span></div>
       </div>
 
       <div class="sel-label">🔢 Cantidad:</div>
@@ -306,10 +406,10 @@ body {
         <span class="chip y">🥛 Lechera</span>
       </div>
 
-      <div class="sel-label">✨ Extras adicionales:</div>
+      <div class="sel-label">✨ Extras (+$2 c/u):</div>
       <div class="extras-grid" id="eg-glorias">
-        <div class="extra-item" onclick="toggleExtra(this)" data-precio="0"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Extra Lechera</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)" data-precio="5"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🍌 Más Plátano (+$5)</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Extra Lechera</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🍌 Más Plátano</span></div>
       </div>
 
       <div class="sel-label">🔢 Cantidad:</div>
@@ -348,12 +448,12 @@ body {
         <button class="sab-btn" onclick="selBase(this)" style="min-height:220px">🍑<br>Durazno</button>
       </div>
 
-      <div class="sel-label">🔥 Extras picosos:</div>
+      <div class="sel-label">🔥 Extras picosos (+$2 c/u):</div>
       <div class="extras-grid" id="eg-diablito">
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🌶️ Doble Chamoy</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🔥 Más Salsa botanera</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🧂 Extra Tajín</span></div>
-        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Con Lechera</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🌶️ Doble Chamoy</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🔥 Más Salsa botanera</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🧂 Extra Tajín</span></div>
+        <div class="extra-item" onclick="toggleExtra(this)"><div class="chk-box"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="extra-lbl">🥛 Con Lechera</span></div>
       </div>
 
       <div class="sel-label">🔢 Cantidad:</div>
@@ -461,19 +561,104 @@ body {
 
 <div class="footer">Hecho con ❤️ para Raspados Didxsaj · Juchitán, Oaxaca</div>
 
+<!-- ═══ BOTÓN ADMIN FLOTANTE ═══ -->
+<button class="admin-btn" id="admin-float-btn" onclick="abrirLoginAdmin()">⚙️</button>
+
+<!-- ═══ MODAL LOGIN ADMIN ═══ -->
+<div class="admin-overlay" id="admin-overlay">
+  <div class="admin-modal">
+    <h2>🔒 Modo Admin</h2>
+    <p>Ingresa la contraseña de administrador</p>
+    <div class="admin-error" id="admin-error">❌ Contraseña incorrecta</div>
+    <input class="inp-field" type="password" id="admin-pass" placeholder="••••••" onkeydown="if(event.key==='Enter')loginAdmin()">
+    <button class="btn-admin-login" onclick="loginAdmin()">Entrar</button>
+    <button class="btn-admin-close" onclick="cerrarLoginAdmin()">Cancelar</button>
+  </div>
+</div>
+
 <script>
-// ── PRECIOS EDITABLES ──
-const P = { clasico:25, glorias:27, diablito:27, botana:12 };
+// ── PRECIOS EDITABLES (se guardan en localStorage) ──
+const DEFAULT_P = { clasico:25, glorias:27, diablito:27, botana:12, extra:2 };
+const P = JSON.parse(localStorage.getItem('didxsaj_precios')) || {...DEFAULT_P};
 
 // Aplicar precios al DOM
-document.getElementById('precio-clasico').textContent  = '$'+P.clasico;
-document.getElementById('precio-glorias').textContent  = '$'+P.glorias;
-document.getElementById('precio-diablito').textContent = '$'+P.diablito;
-document.getElementById('precio-botana').textContent   = P.botana;
-document.querySelectorAll('.bot-precio').forEach(el=>el.textContent='$'+P.botana);
+function aplicarPrecios() {
+  document.getElementById('precio-clasico').textContent  = '$'+P.clasico;
+  document.getElementById('precio-glorias').textContent  = '$'+P.glorias;
+  document.getElementById('precio-diablito').textContent = '$'+P.diablito;
+  document.getElementById('precio-botana').textContent   = P.botana;
+  document.querySelectorAll('.bot-precio').forEach(el=>el.textContent='$'+P.botana);
+  // Actualizar labels de extras con precio actual
+  document.querySelectorAll('.sel-label').forEach(el => {
+    if(el.textContent.includes('+$') && el.textContent.includes('c/u')) {
+      el.textContent = el.textContent.replace(/\+\$\d+ c\/u/, '+$'+P.extra+' c/u');
+    }
+  });
+}
+aplicarPrecios();
 
 let tipoEntrega = 'recoger';
+let isAdmin = false;
 
+// ═══ ADMIN FUNCTIONS ═══
+function abrirLoginAdmin() {
+  if(isAdmin) return; // ya está logueado
+  document.getElementById('admin-overlay').classList.add('visible');
+  document.getElementById('admin-pass').value = '';
+  document.getElementById('admin-error').style.display = 'none';
+  setTimeout(()=>document.getElementById('admin-pass').focus(), 100);
+}
+
+function cerrarLoginAdmin() {
+  document.getElementById('admin-overlay').classList.remove('visible');
+}
+
+function loginAdmin() {
+  const pass = document.getElementById('admin-pass').value;
+  // Contraseña de admin: didxsaj2024
+  if(pass === 'didxsaj2024') {
+    isAdmin = true;
+    cerrarLoginAdmin();
+    document.getElementById('admin-float-btn').classList.add('logged-in');
+    document.getElementById('admin-float-btn').textContent = '✅';
+    // Mostrar panel admin
+    document.getElementById('admin-section').style.display = 'block';
+    // Llenar campos con precios actuales
+    document.getElementById('admin-clasico').value = P.clasico;
+    document.getElementById('admin-glorias').value = P.glorias;
+    document.getElementById('admin-diablito').value = P.diablito;
+    document.getElementById('admin-botana').value = P.botana;
+    document.getElementById('admin-extra').value = P.extra;
+    // Scroll al panel
+    document.getElementById('admin-section').scrollIntoView({behavior:'smooth'});
+  } else {
+    document.getElementById('admin-error').style.display = 'block';
+  }
+}
+
+function logoutAdmin() {
+  isAdmin = false;
+  document.getElementById('admin-float-btn').classList.remove('logged-in');
+  document.getElementById('admin-float-btn').textContent = '⚙️';
+  document.getElementById('admin-section').style.display = 'none';
+}
+
+function guardarPrecios() {
+  P.clasico = parseInt(document.getElementById('admin-clasico').value) || DEFAULT_P.clasico;
+  P.glorias = parseInt(document.getElementById('admin-glorias').value) || DEFAULT_P.glorias;
+  P.diablito = parseInt(document.getElementById('admin-diablito').value) || DEFAULT_P.diablito;
+  P.botana = parseInt(document.getElementById('admin-botana').value) || DEFAULT_P.botana;
+  P.extra = parseInt(document.getElementById('admin-extra').value) || DEFAULT_P.extra;
+  localStorage.setItem('didxsaj_precios', JSON.stringify(P));
+  aplicarPrecios();
+  actualizarResumen();
+  // Mostrar mensaje de guardado
+  const msg = document.getElementById('admin-saved-msg');
+  msg.style.display = 'block';
+  setTimeout(()=>msg.style.display='none', 2000);
+}
+
+// ═══ FUNCIONES DE SELECCIÓN ═══
 function selSabor(btn, prod) {
   document.querySelectorAll('#sg-'+prod+' .sab-btn').forEach(b=>b.classList.remove('activo'));
   btn.classList.add('activo');
@@ -506,6 +691,9 @@ function getExtras(id) {
   return Array.from(document.querySelectorAll('#'+id+' .extra-item.activo'))
     .map(e=>e.querySelector('.extra-lbl').textContent.trim());
 }
+function getExtrasCount(id) {
+  return document.querySelectorAll('#'+id+' .extra-item.activo').length;
+}
 function getSabor(id) {
   const a = document.querySelector('#'+id+' .sab-btn.activo');
   return a ? a.textContent.replace(/\n/g,'').trim() : '';
@@ -517,24 +705,28 @@ function actualizarResumen() {
   if(cc>0){
     const s = getSabor('sg-clasico') || '(sin sabor)';
     const ex = getExtras('eg-clasico');
-    items.push({n: cc+'x Clásico '+s+(ex.length?' + '+ex.join(', '):''), v: cc*P.clasico});
-    total += cc*P.clasico;
+    const extrasCost = getExtrasCount('eg-clasico') * P.extra;
+    const subtotal = cc*P.clasico + extrasCost;
+    items.push({n: cc+'x Clásico '+s+(ex.length?' + '+ex.join(', '):''), v: subtotal});
+    total += subtotal;
   }
   const cg = parseInt(document.getElementById('cant-glorias').textContent);
   if(cg>0){
     const ex = getExtras('eg-glorias');
-    const extraGlorias = Array.from(document.querySelectorAll('#eg-glorias .extra-item.activo'));
-    const extraPrecio = extraGlorias.reduce((sum,el) => sum + (parseInt(el.dataset.precio)||0), 0);
-    items.push({n: cg+'x Las Glorias'+(ex.length?' + '+ex.join(', '):''), v: cg*P.glorias + extraPrecio});
-    total += cg*P.glorias + extraPrecio;
+    const extrasCost = getExtrasCount('eg-glorias') * P.extra;
+    const subtotal = cg*P.glorias + extrasCost;
+    items.push({n: cg+'x Las Glorias'+(ex.length?' + '+ex.join(', '):''), v: subtotal});
+    total += subtotal;
   }
   const cd = parseInt(document.getElementById('cant-diablito').textContent);
   if(cd>0){
     const b = document.querySelector('#bd-diablito .sab-btn.base-activo');
     const base = b ? b.textContent.replace(/\n/g,'').trim() : '(sin base)';
     const ex = getExtras('eg-diablito');
-    items.push({n: cd+'x Diablito ('+base+')'+(ex.length?' + '+ex.join(', '):''), v: cd*P.diablito});
-    total += cd*P.diablito;
+    const extrasCost = getExtrasCount('eg-diablito') * P.extra;
+    const subtotal = cd*P.diablito + extrasCost;
+    items.push({n: cd+'x Diablito ('+base+')'+(ex.length?' + '+ex.join(', '):''), v: subtotal});
+    total += subtotal;
   }
   const bots = Array.from(document.querySelectorAll('#botanas-grid .bot-card.activo'));
   bots.forEach(b=>{
@@ -563,23 +755,27 @@ function enviarWA(){
   if(cc>0){
     const s=getSabor('sg-clasico')||'sin especificar';
     const ex=getExtras('eg-clasico');
-    lineas.push('- '+cc+'x Raspado Clásico sabor '+s+'\n  Extras: '+(ex.length?ex.join(', '):'Sin extras')+'\n  Precio: $'+(cc*P.clasico));
+    const extrasCost = getExtrasCount('eg-clasico') * P.extra;
+    lineas.push('- '+cc+'x Raspado Clásico sabor '+s+'\n  Extras: '+(ex.length?ex.join(', '):'Sin extras')+'\n  Precio: $'+(cc*P.clasico+extrasCost));
   }
   if(cg>0){
     const ex=getExtras('eg-glorias');
-    const extraGlorias = Array.from(document.querySelectorAll('#eg-glorias .extra-item.activo'));
-    const extraPrecioG = extraGlorias.reduce((sum,el) => sum + (parseInt(el.dataset.precio)||0), 0);
-    lineas.push('- '+cg+'x Las Glorias (fresa, plátano, leche, lechera)\n  Extras: '+(ex.length?ex.join(', '):'Sin extras adicionales')+'\n  Precio: $'+(cg*P.glorias+extraPrecioG));
+    const extrasCost = getExtrasCount('eg-glorias') * P.extra;
+    lineas.push('- '+cg+'x Las Glorias (fresa, plátano, leche, lechera)\n  Extras: '+(ex.length?ex.join(', '):'Sin extras adicionales')+'\n  Precio: $'+(cg*P.glorias+extrasCost));
   }
   if(cd>0){
     const b=document.querySelector('#bd-diablito .sab-btn.base-activo');
     const base=b?b.textContent.replace(/\n/g,'').trim():'sin especificar';
     const ex=getExtras('eg-diablito');
-    lineas.push('- '+cd+'x El Diablito (base: '+base+')\n  Extras: '+(ex.length?ex.join(', '):'Sin extras')+'\n  Precio: $'+(cd*P.diablito));
+    const extrasCost = getExtrasCount('eg-diablito') * P.extra;
+    lineas.push('- '+cd+'x El Diablito (base: '+base+')\n  Extras: '+(ex.length?ex.join(', '):'Sin extras')+'\n  Precio: $'+(cd*P.diablito+extrasCost));
   }
   bots.forEach(b=>{ const n=b.querySelector('.bot-nombre').textContent; lineas.push('- 1x Botana: '+n+'\n  Precio: $'+P.botana); });
-  const extraGloriasTotal = Array.from(document.querySelectorAll('#eg-glorias .extra-item.activo')).reduce((sum,el)=>sum+(parseInt(el.dataset.precio)||0),0);
-  const total=(cc*P.clasico)+(cg*P.glorias+extraGloriasTotal)+(cd*P.diablito)+(bots.length*P.botana);
+
+  const totalExtrasClasico = getExtrasCount('eg-clasico') * P.extra;
+  const totalExtrasGlorias = getExtrasCount('eg-glorias') * P.extra;
+  const totalExtrasDiablito = getExtrasCount('eg-diablito') * P.extra;
+  const total=(cc*P.clasico+totalExtrasClasico)+(cg*P.glorias+totalExtrasGlorias)+(cd*P.diablito+totalExtrasDiablito)+(bots.length*P.botana);
 
   let entrega='';
   if(tipoEntrega==='recoger'){
