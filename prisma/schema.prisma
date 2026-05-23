@@ -2,6 +2,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// ═══════════════════════════════════════════════════════
+// Para DESARROLLO LOCAL usamos SQLite:
+//   provider = "sqlite"
+//
+// Para PRODUCCIÓN (Railway/Vercel) usamos PostgreSQL:
+//   provider = "postgresql"
+//
+// Solo cambia el provider y el DATABASE_URL en .env
+// ═══════════════════════════════════════════════════════
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -10,9 +19,9 @@ datasource db {
 model MenuConfig {
   id             String   @id @default("main")
   logoImg        String   @default("")
-  diablitoImg    String   @default("diablito.jpeg")
-  gloriasImg     String   @default("glorias2.jpeg")
-  botanasImg     String   @default("botanas.jpeg")
+  diablitoImg    String   @default("")
+  gloriasImg     String   @default("")
+  botanasImg     String   @default("")
   precioClasico  Int      @default(25)
   precioGlorias  Int      @default(27)
   precioDiablito Int      @default(27)
@@ -62,4 +71,14 @@ model Botana {
   id     String @id @default(cuid())
   nombre String
   orden  Int    @default(0)
+}
+
+// Imágenes almacenadas en la base de datos (funciona en cualquier plataforma)
+model ImageUpload {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  data      String   // base64-encoded image data
+  mimeType  String   @default("image/png")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -1,15 +1,20 @@
 import { NextResponse } from 'next/server'
 
-const ADMIN_PASSWORD = 'didxsaj2024'
-const ADMIN_TOKEN = 'didxsaj-admin-2024-token'
+function getAdminPassword(): string {
+  return process.env.ADMIN_PASSWORD || 'didxsaj2024'
+}
+
+function getAdminToken(): string {
+  return process.env.ADMIN_TOKEN || 'didxsaj-admin-2024-token'
+}
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
     const { password } = body
 
-    if (password === ADMIN_PASSWORD) {
-      return NextResponse.json({ success: true, token: ADMIN_TOKEN })
+    if (password === getAdminPassword()) {
+      return NextResponse.json({ success: true, token: getAdminToken() })
     }
 
     return NextResponse.json({ success: false, error: 'Contraseña incorrecta' }, { status: 401 })

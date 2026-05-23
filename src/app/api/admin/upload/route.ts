@@ -1,14 +1,13 @@
 import { db } from '@/lib/db'
 import { NextResponse } from 'next/server'
-import { randomUUID } from 'crypto'
-import { writeFile, mkdir } from 'fs/promises'
-import path from 'path'
 
-const ADMIN_TOKEN = 'didxsaj-admin-2024-token'
+function getAdminToken(): string {
+  return process.env.ADMIN_TOKEN || 'didxsaj-admin-2024-token'
+}
 
-function checkAuth(request: Request) {
+function checkAuth(request: Request): boolean {
   const auth = request.headers.get('authorization')
-  return auth === `Bearer ${ADMIN_TOKEN}`
+  return auth === `Bearer ${getAdminToken()}`
 }
 
 export async function POST(request: Request) {
@@ -25,37 +24,35 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'File and key are required' }, { status: 400 })
     }
 
+    // Convert file to base64 and store in database
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
+    const base64Data = `data:${file.type || 'image/png'};base64,${buffer.toString('base64')}`
 
-    // Generate unique filename
-    const ext = path.extname(file.name) || '.png'
-    const uniqueName = `${key}_${randomUUID().slice(0, 8)}${ext}`
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads')
+    // Upsert the image in the database
+    await db.imageUpload.upsert({
+      where: { key },
+      update: { data: base64Data, mimeType: file.type || 'image/png' },
+      create: { key, data: base64Data, mimeType: file.type || 'image/png' },
+    })
 
-    // Ensure uploads directory exists
-    await mkdir(uploadsDir, { recursive: true })
+    // Update the corresponding config/sabor with the image reference
+    const imgRef = `db:${key}` // prefix indicates it's stored in DB
 
-    const filePath = path.join(uploadsDir, uniqueName)
-    await writeFile(filePath, buffer)
-
-    const url = `/uploads/${uniqueName}`
-
-    // Update the database based on the key
     if (key === 'logo') {
-      await db.menuConfig.update({ where: { id: 'main' }, data: { logoImg: url } })
+      await db.menuConfig.update({ where: { id: 'main' }, data: { logoImg: imgRef } })
     } else if (key === 'diablito') {
-      await db.menuConfig.update({ where: { id: 'main' }, data: { diablitoImg: url } })
+      await db.menuConfig.update({ where: { id: 'main' }, data: { diablitoImg: imgRef } })
     } else if (key === 'glorias') {
-      await db.menuConfig.update({ where: { id: 'main' }, data: { gloriasImg: url } })
+      await db.menuConfig.update({ where: { id: 'main' }, data: { gloriasImg: imgRef } })
     } else if (key === 'botanas') {
-      await db.menuConfig.update({ where: { id: 'main' }, data: { botanasImg: url } })
+      await db.menuConfig.update({ where: { id: 'main' }, data: { botanasImg: imgRef } })
     } else if (key.startsWith('sabor_')) {
       const saborId = key.replace('sabor_', '')
-      await db.sabor.update({ where: { id: saborId }, data: { img: url } })
+      await db.sabor.update({ where: { id: saborId }, data: { img: imgRef } })
     }
 
-    return NextResponse.json({ success: true, url })
+    return NextResponse.json({ success: true, url: imgRef })
   } catch (error) {
     console.error('Error uploading file:', error)
     return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 })

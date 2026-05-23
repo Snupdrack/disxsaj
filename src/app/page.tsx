@@ -75,7 +75,7 @@ const MAPS_SVG = (
   </svg>
 )
 
-const WA_NUMBER = '5219512645961'
+const WA_NUMBER = process.env.NEXT_PUBLIC_WA_NUMBER || '5219512645961'
 
 export default function Home() {
   /* ─── State ─── */

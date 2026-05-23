@@ -1,11 +1,13 @@
 import { db } from '@/lib/db'
 import { NextResponse } from 'next/server'
 
-const ADMIN_TOKEN = 'didxsaj-admin-2024-token'
+function getAdminToken(): string {
+  return process.env.ADMIN_TOKEN || 'didxsaj-admin-2024-token'
+}
 
-function checkAuth(request: Request) {
+function checkAuth(request: Request): boolean {
   const auth = request.headers.get('authorization')
-  return auth === `Bearer ${ADMIN_TOKEN}`
+  return auth === `Bearer ${getAdminToken()}`
 }
 
 export async function POST(request: Request) {

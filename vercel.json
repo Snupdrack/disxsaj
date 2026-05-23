@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npx prisma generate && next build",
+  "installCommand": "npm install --legacy-peer-deps",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "ADMIN_PASSWORD": "@admin-password",
+    "ADMIN_TOKEN": "@admin-token"
+  }
+}
