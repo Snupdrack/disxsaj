@@ -133,13 +133,6 @@ body {
 }
 .sec-title.rojo { color: var(--rojo); }
 .sec-title.naranja { color: var(--naranja); }
-.sec-subtitle {
-  font-size: 12px;
-  color: var(--texto-muted);
-  padding: 0 4px;
-  margin-top: -12px;
-  margin-bottom: 16px;
-}
 
 /* ═══ CARD GRANDE (Especiales) ═══ */
 .card-big {
@@ -654,7 +647,6 @@ body {
   border-top: 1px solid rgba(255,255,255,0.15);
   color: rgba(255,255,255,0.5);
 }
-.footer-copy strong { color: rgba(255,255,255,0.8); }
 
 /* ═══ ADMIN ═══ */
 .admin-btn {
@@ -677,7 +669,7 @@ body {
 
 .admin-modal {
   background:white; border-radius:var(--radius); padding:28px 22px;
-  width:90%; max-width:340px; box-shadow:0 12px 40px rgba(0,0,0,.3);
+  width:90%; max-width:380px; box-shadow:0 12px 40px rgba(0,0,0,.3);
   text-align:center;
 }
 .admin-modal h2 { font-family:'Fredoka One',cursive; font-size:22px; color:var(--rojo); margin-bottom:5px; }
@@ -725,16 +717,77 @@ body {
 .btn-logout-admin:active{transform:scale(.97)}
 .admin-saved { color:var(--verde-wa); font-weight:700; font-size:12px; margin-top:6px; display:none; }
 
-/* Badge temporada */
-.badge-temp {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 8px;
-  background: rgba(255,165,2,0.12);
-  color: var(--naranja);
-  border-radius: var(--radius-pill);
-  font-family:'Inter',sans-serif;
-  flex-shrink: 0;
+/* Admin tabs */
+.admin-tabs { display:flex; gap:4px; margin-bottom:14px; }
+.admin-tab {
+  flex:1; padding:8px 4px; border:1.5px solid var(--rojo); border-radius:8px;
+  background:white; color:var(--rojo); font-family:'Poppins',sans-serif;
+  font-size:11px; font-weight:700; cursor:pointer; text-align:center; transition:.18s;
+}
+.admin-tab.activo { background:var(--rojo); color:white; }
+.admin-tab-content { display:none; }
+.admin-tab-content.activo { display:block; }
+
+.admin-sabor-item {
+  background:white; border-radius:10px; padding:10px 12px; margin-bottom:8px;
+  border:1.5px solid #e8e8e8;
+}
+.admin-sabor-item .as-row { display:flex; align-items:center; gap:6px; margin-bottom:6px; }
+.admin-sabor-item .as-row label { font-size:11px; font-weight:700; color:var(--texto-muted); min-width:55px; }
+.admin-sabor-item .as-row input {
+  flex:1; padding:6px 8px; border:1.5px solid #ddd; border-radius:6px;
+  font-family:'Inter',sans-serif; font-size:13px; color:var(--texto);
+}
+.admin-sabor-item .as-row input[type="color"] { width:36px; height:30px; padding:2px; cursor:pointer; }
+.admin-sabor-item .btn-del-sabor {
+  padding:4px 10px; border:none; border-radius:6px;
+  background:#ff6b6b; color:white; font-size:11px; font-weight:700;
+  cursor:pointer; font-family:'Poppins',sans-serif;
+}
+.btn-add-sabor {
+  width:100%; padding:10px; border:2px dashed var(--rojo); border-radius:10px;
+  background:transparent; color:var(--rojo); font-family:'Poppins',sans-serif;
+  font-size:13px; font-weight:700; cursor:pointer; margin-top:4px;
+}
+
+/* Admin image upload */
+.admin-img-item {
+  background:white; border-radius:10px; padding:10px 12px; margin-bottom:8px;
+  border:1.5px solid #e8e8e8;
+}
+.admin-img-item .ai-label { font-size:12px; font-weight:700; color:var(--texto); margin-bottom:6px; }
+.admin-img-item .ai-preview {
+  width:100%; height:80px; border-radius:8px; background:var(--gris-fondo);
+  overflow:hidden; margin-bottom:6px; display:flex; align-items:center; justify-content:center;
+}
+.admin-img-item .ai-preview img { width:100%; height:100%; object-fit:cover; }
+.admin-img-item .ai-preview .ai-ph { font-size:11px; color:var(--texto-muted); }
+.admin-img-item .btn-change-img {
+  padding:6px 14px; border:1.5px solid var(--rojo); border-radius:8px;
+  background:white; color:var(--rojo); font-family:'Poppins',sans-serif;
+  font-size:11px; font-weight:700; cursor:pointer; transition:.18s;
+}
+.admin-img-item .btn-change-img:active { transform:scale(.96); }
+.admin-img-item input[type="file"] { display:none; }
+
+/* Extras admin */
+.admin-extra-item {
+  display:flex; align-items:center; gap:6px; margin-bottom:6px;
+  background:white; border-radius:8px; padding:6px 10px; border:1.5px solid #e8e8e8;
+}
+.admin-extra-item input {
+  flex:1; padding:6px 8px; border:1.5px solid #ddd; border-radius:6px;
+  font-family:'Inter',sans-serif; font-size:13px; color:var(--texto);
+}
+.admin-extra-item .btn-del-extra {
+  padding:4px 8px; border:none; border-radius:6px;
+  background:#ff6b6b; color:white; font-size:11px; font-weight:700;
+  cursor:pointer; font-family:'Poppins',sans-serif;
+}
+.btn-add-extra {
+  padding:6px 14px; border:2px dashed var(--rojo); border-radius:8px;
+  background:transparent; color:var(--rojo); font-family:'Poppins',sans-serif;
+  font-size:12px; font-weight:700; cursor:pointer;
 }
 </style>
 </head>
@@ -745,20 +798,17 @@ body {
   <div class="header-blob"></div>
   <div class="header-blob"></div>
   <div class="header-blob"></div>
-
   <div class="header-content">
     <div class="logo-circle">
-      <img src="logo.png" alt="Raspados Didxsaj"
+      <img id="logo-img" src="logo.png" alt="Raspados Didxsaj"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       <div class="logo-fallback" style="display:none;">
         <div class="lf-icon">🧊</div>
         <div class="lf-txt">RASPADOS<br>DIDXSAJ</div>
       </div>
     </div>
-
     <h1 class="header-title">Raspados Didxsaj</h1>
     <p class="header-sub">Raspados artesanales con los sabores más frescos de Juchitán de Zaragoza, Oaxaca</p>
-
     <div class="delivery-pill">
       <span>🛵</span>
       <span>¡Servicio a domicilio disponible!</span>
@@ -769,267 +819,11 @@ body {
 
 <!-- ═══ MAIN ═══ -->
 <main class="main">
+  <!-- ADMIN PANEL (rendered dynamically) -->
+  <div id="admin-section" style="display:none"></div>
 
-  <!-- ADMIN PANEL -->
-  <div id="admin-section" style="display:none">
-    <div class="admin-panel visible">
-      <h3>⚙️ Modo Administrador</h3>
-      <div class="admin-price-row">
-        <label>Raspado Clásico</label>
-        <input type="number" id="admin-clasico" min="0">
-      </div>
-      <div class="admin-price-row">
-        <label>Las Glorias</label>
-        <input type="number" id="admin-glorias" min="0">
-      </div>
-      <div class="admin-price-row">
-        <label>El Diablito</label>
-        <input type="number" id="admin-diablito" min="0">
-      </div>
-      <div class="admin-price-row">
-        <label>Botana</label>
-        <input type="number" id="admin-botana" min="0">
-      </div>
-      <div class="admin-price-row">
-        <label>Costo por extra</label>
-        <input type="number" id="admin-extra" min="0">
-      </div>
-      <button class="btn-save-admin" onclick="guardarPrecios()">💾 Guardar precios</button>
-      <div class="admin-saved" id="admin-saved-msg">✅ ¡Precios guardados!</div>
-      <button class="btn-logout-admin" onclick="logoutAdmin()">🔒 Cerrar sesión admin</button>
-    </div>
-  </div>
-
-  <!-- ═══ ESPECIALES ═══ -->
-  <section>
-    <h2 class="sec-title rojo">⭐ Especiales</h2>
-
-    <!-- EL DIABLITO -->
-    <div class="card-big">
-      <div class="card-img">
-        <img src="diablito.jpeg" alt="El Diablito"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="card-img-ph" style="display:none;">
-          <div>😈🌶️</div>
-          <p>El Diablito</p>
-        </div>
-        <div class="price-float rojo" id="precio-diablito">$27</div>
-      </div>
-      <div class="card-body">
-        <div>
-          <h3 class="prod-name rojo">🌶️ El Diablito</h3>
-          <p class="prod-desc">Clásico de Tamarindo, Nanche o Durazno, cargado con chamoy, salsa botanera y Tajín. ¡Pica pero sabe rico!</p>
-        </div>
-        <div>
-          <div class="base-label">🫙 Elige tu base:</div>
-          <div class="base-grid" id="bd-diablito">
-            <button class="base-btn" onclick="selBase(this)">🫙 Tamarindo</button>
-            <button class="base-btn" onclick="selBase(this)">🌿 Nanche</button>
-            <button class="base-btn" onclick="selBase(this)">🍑 Durazno</button>
-          </div>
-        </div>
-        <div>
-          <div class="extras-label">🔥 Extras (+$<span class="extra-precio">2</span> c/u):</div>
-          <div class="extras-wrap" id="eg-diablito">
-            <div class="extra-chip" onclick="toggleExtra(this)"><div class="chk"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>🌶️ Doble Chamoy</div>
-            <div class="extra-chip" onclick="toggleExtra(this)"><div class="chk"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>🔥 Más Salsa botanera</div>
-            <div class="extra-chip" onclick="toggleExtra(this)"><div class="chk"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>🧂 Extra Tajín</div>
-            <div class="extra-chip" onclick="toggleExtra(this)"><div class="chk"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>🥛 Con Lechera</div>
-          </div>
-        </div>
-        <div class="add-row">
-          <span class="cant-label">Cantidad</span>
-          <div class="cant-controls">
-            <button class="cant-btn" onclick="cambiarCant('diablito',-1)">−</button>
-            <span class="cant-num" id="cant-diablito">0</span>
-            <button class="cant-btn" onclick="cambiarCant('diablito',1)">+</button>
-          </div>
-          <button class="btn-agregar rojo" onclick="agregarItem('diablito')">Agregar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- LAS GLORIAS -->
-    <div class="card-big">
-      <div class="card-img">
-        <img src="glorias2.jpeg" alt="Las Glorias"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="card-img-ph" style="display:none;background:linear-gradient(135deg,#fff8e1,#ffeaea);">
-          <div>🍌✨🥛</div>
-          <p>Las Glorias</p>
-        </div>
-        <div class="price-float naranja" id="precio-glorias">$27</div>
-      </div>
-      <div class="card-body">
-        <div>
-          <h3 class="prod-name naranja">🌟 Las Glorias</h3>
-          <p class="prod-desc">Sabor de fresa con plátano, leche, lechera y ese toque especial. ¡El favorito de la casa!</p>
-        </div>
-        <div>
-          <div class="extras-label">✨ Extras (+$<span class="extra-precio">2</span> c/u):</div>
-          <div class="extras-wrap" id="eg-glorias">
-            <div class="extra-chip" onclick="toggleExtra(this)"><div class="chk"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>🥛 Extra Lechera</div>
-            <div class="extra-chip" onclick="toggleExtra(this)"><div class="chk"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>🍌 Más Plátano</div>
-          </div>
-        </div>
-        <div class="add-row">
-          <span class="cant-label">Cantidad</span>
-          <div class="cant-controls">
-            <button class="cant-btn" onclick="cambiarCant('glorias',-1)">−</button>
-            <span class="cant-num" id="cant-glorias">0</span>
-            <button class="cant-btn" onclick="cambiarCant('glorias',1)">+</button>
-          </div>
-          <button class="btn-agregar naranja" onclick="agregarItem('glorias')">Agregar</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ NUESTROS SABORES ═══ -->
-  <section>
-    <h2 class="sec-title rojo">🍧 Nuestros Sabores</h2>
-
-    <!-- Fresa -->
-    <div class="sabor-card">
-      <div class="sabor-img">
-        <div class="sabor-emoji-ph" style="background:linear-gradient(135deg,#ffe0e0,#ffccd5)">🍓</div>
-      </div>
-      <div class="sabor-info">
-        <div>
-          <h3 class="sabor-name" style="color:#DC143C">🍓 Fresa</h3>
-          <p class="sabor-desc">Rojo intenso y dulce, irresistible como la fresa fresca.</p>
-        </div>
-        <div class="sabor-bottom">
-          <span class="sabor-precio" style="color:#DC143C" id="precio-clasico-fresa">$25</span>
-          <div class="sabor-qty">
-            <button class="cant-btn" onclick="cambiarCant('fresa',-1)">−</button>
-            <span class="cant-num" id="cant-fresa">0</span>
-            <button class="cant-btn" onclick="cambiarCant('fresa',1)">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Limón -->
-    <div class="sabor-card">
-      <div class="sabor-img">
-        <div class="sabor-emoji-ph" style="background:linear-gradient(135deg,#f0fff0,#e8f5e9)">🍋</div>
-      </div>
-      <div class="sabor-info">
-        <div>
-          <h3 class="sabor-name" style="color:#6B8E23">🍋 Limón</h3>
-          <p class="sabor-desc">Refrescante y cítrico, el favorito para el calor extremo.</p>
-        </div>
-        <div class="sabor-bottom">
-          <span class="sabor-precio" style="color:#6B8E23">$25</span>
-          <div class="sabor-qty">
-            <button class="cant-btn" onclick="cambiarCant('limon',-1)">−</button>
-            <span class="cant-num" id="cant-limon">0</span>
-            <button class="cant-btn" onclick="cambiarCant('limon',1)">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Piña -->
-    <div class="sabor-card">
-      <div class="sabor-img">
-        <div class="sabor-emoji-ph" style="background:linear-gradient(135deg,#fffde7,#fff9c4)">🍍</div>
-      </div>
-      <div class="sabor-info">
-        <div>
-          <h3 class="sabor-name" style="color:#FFD700">🍍 Piña</h3>
-          <p class="sabor-desc">Tropical y refrescante, el sabor de la piña natural.</p>
-        </div>
-        <div class="sabor-bottom">
-          <span class="sabor-precio" style="color:#FFD700">$25</span>
-          <div class="sabor-qty">
-            <button class="cant-btn" onclick="cambiarCant('pina',-1)">−</button>
-            <span class="cant-num" id="cant-pina">0</span>
-            <button class="cant-btn" onclick="cambiarCant('pina',1)">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mora azul -->
-    <div class="sabor-card">
-      <div class="sabor-img">
-        <div class="sabor-emoji-ph" style="background:linear-gradient(135deg,#e8e0ff,#d0c4ff)">🫐</div>
-      </div>
-      <div class="sabor-info">
-        <div>
-          <h3 class="sabor-name" style="color:#5B4FCF">🫐 Mora azul</h3>
-          <p class="sabor-desc">Intenso y dulce, el sabor bold de la mora azul.</p>
-        </div>
-        <div class="sabor-bottom">
-          <span class="sabor-precio" style="color:#5B4FCF">$25</span>
-          <div class="sabor-qty">
-            <button class="cant-btn" onclick="cambiarCant('mora',-1)">−</button>
-            <span class="cant-num" id="cant-mora">0</span>
-            <button class="cant-btn" onclick="cambiarCant('mora',1)">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Nanche -->
-    <div class="sabor-card">
-      <div class="sabor-img">
-        <div class="sabor-emoji-ph" style="background:linear-gradient(135deg,#fff8e1,#ffecb3)">🌿</div>
-      </div>
-      <div class="sabor-info">
-        <div>
-          <h3 class="sabor-name" style="color:#DAA520">🌿 Nanche</h3>
-          <p class="sabor-desc">Dulce y tropical, el sabor dorado del nanche oaxaqueño.</p>
-        </div>
-        <div class="sabor-bottom">
-          <span class="sabor-precio" style="color:#DAA520">$25</span>
-          <div class="sabor-qty">
-            <button class="cant-btn" onclick="cambiarCant('nanche',-1)">−</button>
-            <span class="cant-num" id="cant-nanche">0</span>
-            <button class="cant-btn" onclick="cambiarCant('nanche',1)">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Extras para clásicos -->
-    <div style="margin-top:12px">
-      <div class="extras-label">✨ Extras para sabores (+$<span class="extra-precio">2</span> c/u):</div>
-      <div class="extras-wrap" id="eg-clasico">
-        <div class="extra-chip" onclick="toggleExtra(this)"><div class="chk"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>🌶️ Chamoy</div>
-        <div class="extra-chip" onclick="toggleExtra(this)"><div class="chk"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>🔥 Salsa</div>
-        <div class="extra-chip" onclick="toggleExtra(this)"><div class="chk"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>🧂 Tajín</div>
-        <div class="extra-chip" onclick="toggleExtra(this)"><div class="chk"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>🥛 Lechera</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ BOTANAS ═══ -->
-  <section>
-    <h2 class="sec-title naranja">🍿 Botanas y Antojos</h2>
-    <div class="botanas-card">
-      <div class="botanas-img">
-        <img src="botanas.jpeg" alt="Botanas"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="card-img-ph" style="display:none;height:100%;background:linear-gradient(135deg,#fff8e1,#ffeaea);">
-          <div>🍿🥔</div>
-          <p>Botanas</p>
-        </div>
-        <div class="botanas-price-float" id="precio-botana-float">$12</div>
-      </div>
-      <div class="botanas-body">
-        <p class="botanas-desc">Para acompañar tu raspado</p>
-        <div class="botanas-grid" id="botanas-grid">
-          <button class="botana-btn" onclick="toggleBotana(this,'Papas')">🥔 Papas</button>
-          <button class="botana-btn" onclick="toggleBotana(this,'Chicharrones')">🫳 Chicharrones</button>
-          <button class="botana-btn" onclick="toggleBotana(this,'Hojuelas')">🌾 Hojuelas</button>
-          <button class="botana-btn" onclick="toggleBotana(this,'Cacahuates')">🥜 Cacahuates</button>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- MENU SECTIONS (rendered dynamically) -->
+  <div id="menu-container"></div>
 
   <!-- ═══ ENTREGA ═══ -->
   <section>
@@ -1110,7 +904,6 @@ body {
       </button>
     </div>
   </div>
-
 </main>
 
 <!-- ═══ FOOTER ═══ -->
@@ -1136,23 +929,426 @@ body {
 </div>
 
 <script>
-// ── PRECIOS EDITABLES ──
-const DEFAULT_P = { clasico:25, glorias:27, diablito:27, botana:12, extra:2 };
-const P = JSON.parse(localStorage.getItem('didxsaj_precios')) || {...DEFAULT_P};
+// ══════════════════════════════════════════════════
+//  ESTRUCTURA DE DATOS DEL MENÚ
+//  Todo se guarda en localStorage como JSON
+//  Las imágenes se guardan como base64 en localStorage
+// ══════════════════════════════════════════════════
 
-function aplicarPrecios() {
-  document.getElementById('precio-diablito').textContent = '$'+P.diablito;
-  document.getElementById('precio-glorias').textContent = '$'+P.glorias;
-  document.getElementById('precio-botana-float').textContent = '$'+P.botana;
-  document.querySelectorAll('.sabor-precio').forEach(el => el.textContent = '$'+P.clasico);
-  document.querySelectorAll('.extra-precio').forEach(el => el.textContent = P.extra);
+const DEFAULT_MENU = {
+  precios: { clasico:25, glorias:27, diablito:27, botana:12, extra:2 },
+  sabores: [
+    { id:'fresa', nombre:'Fresa', emoji:'🍓', color:'#DC143C', bg:'linear-gradient(135deg,#ffe0e0,#ffccd5)', desc:'Rojo intenso y dulce, irresistible como la fresa fresca.', img:'' },
+    { id:'limon', nombre:'Limón', emoji:'🍋', color:'#6B8E23', bg:'linear-gradient(135deg,#f0fff0,#e8f5e9)', desc:'Refrescante y cítrico, el favorito para el calor extremo.', img:'' },
+    { id:'pina', nombre:'Piña', emoji:'🍍', color:'#FFD700', bg:'linear-gradient(135deg,#fffde7,#fff9c4)', desc:'Tropical y refrescante, el sabor de la piña natural.', img:'' },
+    { id:'mora', nombre:'Mora azul', emoji:'🫐', color:'#5B4FCF', bg:'linear-gradient(135deg,#e8e0ff,#d0c4ff)', desc:'Intenso y dulce, el sabor bold de la mora azul.', img:'' },
+    { id:'nanche', nombre:'Nanche', emoji:'🌿', color:'#DAA520', bg:'linear-gradient(135deg,#fff8e1,#ffecb3)', desc:'Dulce y tropical, el sabor dorado del nanche oaxaqueño.', img:'' },
+  ],
+  extrasClasico: ['🌶️ Chamoy','🔥 Salsa','🧂 Tajín','🥛 Lechera'],
+  diablito: {
+    bases: ['🫙 Tamarindo','🌿 Nanche','🍑 Durazno'],
+    extras: ['🌶️ Doble Chamoy','🔥 Más Salsa botanera','🧂 Extra Tajín','🥛 Con Lechera'],
+    img: 'diablito.jpeg',
+    desc: 'Clásico de Tamarindo, Nanche o Durazno, cargado con chamoy, salsa botanera y Tajín. ¡Pica pero sabe rico!'
+  },
+  glorias: {
+    extras: ['🥛 Extra Lechera','🍌 Más Plátano'],
+    img: 'glorias2.jpeg',
+    desc: 'Sabor de fresa con plátano, leche, lechera y ese toque especial. ¡El favorito de la casa!'
+  },
+  botanas: {
+    items: ['🥔 Papas','🫳 Chicharrones','🌾 Hojuelas','🥜 Cacahuates'],
+    img: 'botanas.jpeg'
+  },
+  logo: ''
+};
+
+// Cargar datos de localStorage o usar defaults
+let MENU = JSON.parse(localStorage.getItem('didxsaj_menu')) || JSON.parse(JSON.stringify(DEFAULT_MENU));
+let IMGS = JSON.parse(localStorage.getItem('didxsaj_imgs')) || {};
+
+// Migrar datos antiguos de precios
+const oldPrecios = JSON.parse(localStorage.getItem('didxsaj_precios'));
+if(oldPrecios) {
+  MENU.precios = {...MENU.precios, ...oldPrecios};
+  localStorage.setItem('didxsaj_menu', JSON.stringify(MENU));
+  localStorage.removeItem('didxsaj_precios');
 }
-aplicarPrecios();
 
+const P = MENU.precios;
 let tipoEntrega = 'recoger';
 let isAdmin = false;
 
-// ═══ ADMIN ═══
+// ═══ SVG CHECK ═══
+const CHK_SVG = '<svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+// ═══ RENDERIZAR MENÚ COMPLETO ═══
+function renderMenu() {
+  const c = document.getElementById('menu-container');
+  let html = '';
+
+  // ── ESPECIALES ──
+  html += '<section><h2 class="sec-title rojo">⭐ Especiales</h2>';
+
+  // EL DIABLITO
+  const dImg = IMGS['diablito'] || MENU.diablito.img;
+  html += `<div class="card-big">
+    <div class="card-img">
+      ${dImg ? `<img src="${dImg}" alt="El Diablito" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">` : ''}
+      <div class="card-img-ph" style="display:${dImg?'none':'flex'};"><div>😈🌶️</div><p>El Diablito</p></div>
+      <div class="price-float rojo" id="precio-diablito">$${P.diablito}</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h3 class="prod-name rojo">🌶️ El Diablito</h3>
+        <p class="prod-desc">${MENU.diablito.desc}</p>
+      </div>
+      <div>
+        <div class="base-label">🫙 Elige tu base:</div>
+        <div class="base-grid" id="bd-diablito">
+          ${MENU.diablito.bases.map(b=>`<button class="base-btn" onclick="selBase(this)">${b}</button>`).join('')}
+        </div>
+      </div>
+      <div>
+        <div class="extras-label">🔥 Extras (+$<span class="extra-precio">${P.extra}</span> c/u):</div>
+        <div class="extras-wrap" id="eg-diablito">
+          ${MENU.diablito.extras.map(e=>`<div class="extra-chip" onclick="toggleExtra(this)"><div class="chk">${CHK_SVG}</div>${e}</div>`).join('')}
+        </div>
+      </div>
+      <div class="add-row">
+        <span class="cant-label">Cantidad</span>
+        <div class="cant-controls">
+          <button class="cant-btn" onclick="cambiarCant('diablito',-1)">−</button>
+          <span class="cant-num" id="cant-diablito">0</span>
+          <button class="cant-btn" onclick="cambiarCant('diablito',1)">+</button>
+        </div>
+        <button class="btn-agregar rojo" onclick="agregarItem('diablito')">Agregar</button>
+      </div>
+    </div>
+  </div>`;
+
+  // LAS GLORIAS
+  const gImg = IMGS['glorias'] || MENU.glorias.img;
+  html += `<div class="card-big">
+    <div class="card-img">
+      ${gImg ? `<img src="${gImg}" alt="Las Glorias" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">` : ''}
+      <div class="card-img-ph" style="display:${gImg?'none':'flex'};background:linear-gradient(135deg,#fff8e1,#ffeaea);"><div>🍌✨🥛</div><p>Las Glorias</p></div>
+      <div class="price-float naranja" id="precio-glorias">$${P.glorias}</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h3 class="prod-name naranja">🌟 Las Glorias</h3>
+        <p class="prod-desc">${MENU.glorias.desc}</p>
+      </div>
+      <div>
+        <div class="extras-label">✨ Extras (+$<span class="extra-precio">${P.extra}</span> c/u):</div>
+        <div class="extras-wrap" id="eg-glorias">
+          ${MENU.glorias.extras.map(e=>`<div class="extra-chip" onclick="toggleExtra(this)"><div class="chk">${CHK_SVG}</div>${e}</div>`).join('')}
+        </div>
+      </div>
+      <div class="add-row">
+        <span class="cant-label">Cantidad</span>
+        <div class="cant-controls">
+          <button class="cant-btn" onclick="cambiarCant('glorias',-1)">−</button>
+          <span class="cant-num" id="cant-glorias">0</span>
+          <button class="cant-btn" onclick="cambiarCant('glorias',1)">+</button>
+        </div>
+        <button class="btn-agregar naranja" onclick="agregarItem('glorias')">Agregar</button>
+      </div>
+    </div>
+  </div>`;
+
+  html += '</section>';
+
+  // ── NUESTROS SABORES ──
+  html += '<section><h2 class="sec-title rojo">🍧 Nuestros Sabores</h2>';
+  MENU.sabores.forEach(s => {
+    const sImg = IMGS['sabor_'+s.id] || s.img;
+    html += `<div class="sabor-card">
+      <div class="sabor-img">
+        ${sImg ? `<img src="${sImg}" alt="${s.nombre}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">` : ''}
+        <div class="sabor-emoji-ph" style="display:${sImg?'none':'flex'};background:${s.bg||'linear-gradient(135deg,#ffeaea,#fff8e1)'}">${s.emoji}</div>
+      </div>
+      <div class="sabor-info">
+        <div>
+          <h3 class="sabor-name" style="color:${s.color}">${s.emoji} ${s.nombre}</h3>
+          <p class="sabor-desc">${s.desc}</p>
+        </div>
+        <div class="sabor-bottom">
+          <span class="sabor-precio" style="color:${s.color}">$${P.clasico}</span>
+          <div class="sabor-qty">
+            <button class="cant-btn" onclick="cambiarCant('${s.id}',-1)">−</button>
+            <span class="cant-num" id="cant-${s.id}">0</span>
+            <button class="cant-btn" onclick="cambiarCant('${s.id}',1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  // Extras para clásicos
+  html += `<div style="margin-top:12px">
+    <div class="extras-label">✨ Extras para sabores (+$<span class="extra-precio">${P.extra}</span> c/u):</div>
+    <div class="extras-wrap" id="eg-clasico">
+      ${MENU.extrasClasico.map(e=>`<div class="extra-chip" onclick="toggleExtra(this)"><div class="chk">${CHK_SVG}</div>${e}</div>`).join('')}
+    </div>
+  </div>`;
+  html += '</section>';
+
+  // ── BOTANAS ──
+  const bImg = IMGS['botanas'] || MENU.botanas.img;
+  html += `<section>
+    <h2 class="sec-title naranja">🍿 Botanas y Antojos</h2>
+    <div class="botanas-card">
+      <div class="botanas-img">
+        ${bImg ? `<img src="${bImg}" alt="Botanas" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">` : ''}
+        <div class="card-img-ph" style="display:${bImg?'none':'flex'};height:100%;background:linear-gradient(135deg,#fff8e1,#ffeaea);"><div>🍿🥔</div><p>Botanas</p></div>
+        <div class="botanas-price-float" id="precio-botana-float">$${P.botana}</div>
+      </div>
+      <div class="botanas-body">
+        <p class="botanas-desc">Para acompañar tu raspado</p>
+        <div class="botanas-grid" id="botanas-grid">
+          ${MENU.botanas.items.map(b=>`<button class="botana-btn" onclick="toggleBotana(this,'${b.replace(/'/g,"\\'")}')">${b}</button>`).join('')}
+        </div>
+      </div>
+    </div>
+  </section>`;
+
+  c.innerHTML = html;
+}
+
+// ═══ RENDERIZAR ADMIN PANEL ═══
+function renderAdmin() {
+  const sec = document.getElementById('admin-section');
+  sec.innerHTML = `<div class="admin-panel visible">
+    <h3>⚙️ Modo Administrador</h3>
+
+    <div class="admin-tabs">
+      <button class="admin-tab activo" onclick="setAdminTab(0,this)">💰 Precios</button>
+      <button class="admin-tab" onclick="setAdminTab(1,this)">🍧 Sabores</button>
+      <button class="admin-tab" onclick="setAdminTab(2,this)">🖼️ Imágenes</button>
+      <button class="admin-tab" onclick="setAdminTab(3,this)">➕ Extras</button>
+    </div>
+
+    <!-- TAB 0: PRECIOS -->
+    <div class="admin-tab-content activo" id="atab-0">
+      <div class="admin-price-row"><label>Raspado Clásico</label><input type="number" id="admin-clasico" min="0" value="${P.clasico}"></div>
+      <div class="admin-price-row"><label>Las Glorias</label><input type="number" id="admin-glorias" min="0" value="${P.glorias}"></div>
+      <div class="admin-price-row"><label>El Diablito</label><input type="number" id="admin-diablito" min="0" value="${P.diablito}"></div>
+      <div class="admin-price-row"><label>Botana</label><input type="number" id="admin-botana" min="0" value="${P.botana}"></div>
+      <div class="admin-price-row"><label>Costo por extra</label><input type="number" id="admin-extra" min="0" value="${P.extra}"></div>
+      <button class="btn-save-admin" onclick="guardarPrecios()">💾 Guardar precios</button>
+      <div class="admin-saved" id="admin-saved-msg">✅ ¡Precios guardados!</div>
+    </div>
+
+    <!-- TAB 1: SABORES -->
+    <div class="admin-tab-content" id="atab-1">
+      <div id="admin-sabores-list">
+        ${MENU.sabores.map((s,i)=>`<div class="admin-sabor-item" data-idx="${i}">
+          <div class="as-row"><label>Nombre</label><input type="text" value="${s.nombre}" onchange="updateSabor(${i},'nombre',this.value)"></div>
+          <div class="as-row"><label>Emoji</label><input type="text" value="${s.emoji}" style="max-width:50px" onchange="updateSabor(${i},'emoji',this.value)"></div>
+          <div class="as-row"><label>Color</label><input type="color" value="${s.color}" onchange="updateSabor(${i},'color',this.value)"></div>
+          <div class="as-row"><label>Descripción</label><input type="text" value="${s.desc}" onchange="updateSabor(${i},'desc',this.value)"></div>
+          <div style="text-align:right"><button class="btn-del-sabor" onclick="deleteSabor(${i})">🗑️ Eliminar</button></div>
+        </div>`).join('')}
+      </div>
+      <button class="btn-add-sabor" onclick="addSabor()">➕ Agregar nuevo sabor</button>
+      <button class="btn-save-admin" onclick="guardarMenu()">💾 Guardar cambios</button>
+    </div>
+
+    <!-- TAB 2: IMÁGENES -->
+    <div class="admin-tab-content" id="atab-2">
+      <p style="font-size:11px;color:var(--texto-muted);margin-bottom:10px;">Las imágenes se guardan en el navegador (localStorage). Si cambias de dispositivo tendrás que subirlas de nuevo.</p>
+
+      <div class="admin-img-item">
+        <div class="ai-label">🏷️ Logo (encabezado)</div>
+        <div class="ai-preview" id="aip-logo">${IMGS['logo'] ? '<img src="'+IMGS['logo']+'">' : '<span class="ai-ph">Sin imagen personalizada</span>'}</div>
+        <button class="btn-change-img" onclick="document.getElementById('aif-logo').click()">📷 Cambiar imagen</button>
+        <input type="file" id="aif-logo" accept="image/*" onchange="uploadImg('logo',this)">
+      </div>
+
+      <div class="admin-img-item">
+        <div class="ai-label">😈 El Diablito</div>
+        <div class="ai-preview" id="aip-diablito">${IMGS['diablito'] ? '<img src="'+IMGS['diablito']+'">' : '<span class="ai-ph">Usando: '+MENU.diablito.img+'</span>'}</div>
+        <button class="btn-change-img" onclick="document.getElementById('aif-diablito').click()">📷 Cambiar imagen</button>
+        <input type="file" id="aif-diablito" accept="image/*" onchange="uploadImg('diablito',this)">
+      </div>
+
+      <div class="admin-img-item">
+        <div class="ai-label">🌟 Las Glorias</div>
+        <div class="ai-preview" id="aip-glorias">${IMGS['glorias'] ? '<img src="'+IMGS['glorias']+'">' : '<span class="ai-ph">Usando: '+MENU.glorias.img+'</span>'}</div>
+        <button class="btn-change-img" onclick="document.getElementById('aif-glorias').click()">📷 Cambiar imagen</button>
+        <input type="file" id="aif-glorias" accept="image/*" onchange="uploadImg('glorias',this)">
+      </div>
+
+      <div class="admin-img-item">
+        <div class="ai-label">🍿 Botanas</div>
+        <div class="ai-preview" id="aip-botanas">${IMGS['botanas'] ? '<img src="'+IMGS['botanas']+'">' : '<span class="ai-ph">Usando: '+MENU.botanas.img+'</span>'}</div>
+        <button class="btn-change-img" onclick="document.getElementById('aif-botanas').click()">📷 Cambiar imagen</button>
+        <input type="file" id="aif-botanas" accept="image/*" onchange="uploadImg('botanas',this)">
+      </div>
+
+      ${MENU.sabores.map(s=>`<div class="admin-img-item">
+        <div class="ai-label">${s.emoji} ${s.nombre}</div>
+        <div class="ai-preview" id="aip-sabor_${s.id}">${IMGS['sabor_'+s.id] ? '<img src="'+IMGS['sabor_'+s.id]+'">' : '<span class="ai-ph">Solo emoji</span>'}</div>
+        <button class="btn-change-img" onclick="document.getElementById('aif-sabor_${s.id}').click()">📷 Cambiar imagen</button>
+        <input type="file" id="aif-sabor_${s.id}" accept="image/*" onchange="uploadImg('sabor_${s.id}',this)">
+      </div>`).join('')}
+
+      <button class="btn-save-admin" onclick="guardarMenu()">💾 Guardar cambios</button>
+    </div>
+
+    <!-- TAB 3: EXTRAS Y BOTANAS -->
+    <div class="admin-tab-content" id="atab-3">
+      <p style="font-size:12px;font-weight:700;color:var(--texto);margin-bottom:6px;">Extras para Clásicos</p>
+      <div id="admin-extras-clasico">
+        ${MENU.extrasClasico.map((e,i)=>`<div class="admin-extra-item">
+          <input type="text" value="${e}" onchange="updateExtraClasico(${i},this.value)">
+          <button class="btn-del-extra" onclick="deleteExtraClasico(${i})">✕</button>
+        </div>`).join('')}
+      </div>
+      <button class="btn-add-extra" onclick="addExtraClasico()">+ Extra clásico</button>
+
+      <p style="font-size:12px;font-weight:700;color:var(--texto);margin:12px 0 6px;">Extras para Diablito</p>
+      <div id="admin-extras-diablito">
+        ${MENU.diablito.extras.map((e,i)=>`<div class="admin-extra-item">
+          <input type="text" value="${e}" onchange="updateExtraDiablito(${i},this.value)">
+          <button class="btn-del-extra" onclick="deleteExtraDiablito(${i})">✕</button>
+        </div>`).join('')}
+      </div>
+      <button class="btn-add-extra" onclick="addExtraDiablito()">+ Extra diablito</button>
+
+      <p style="font-size:12px;font-weight:700;color:var(--texto);margin:12px 0 6px;">Extras para Glorias</p>
+      <div id="admin-extras-glorias">
+        ${MENU.glorias.extras.map((e,i)=>`<div class="admin-extra-item">
+          <input type="text" value="${e}" onchange="updateExtraGlorias(${i},this.value)">
+          <button class="btn-del-extra" onclick="deleteExtraGlorias(${i})">✕</button>
+        </div>`).join('')}
+      </div>
+      <button class="btn-add-extra" onclick="addExtraGlorias()">+ Extra gloria</button>
+
+      <p style="font-size:12px;font-weight:700;color:var(--texto);margin:12px 0 6px;">Bases para Diablito</p>
+      <div id="admin-bases-diablito">
+        ${MENU.diablito.bases.map((e,i)=>`<div class="admin-extra-item">
+          <input type="text" value="${e}" onchange="updateBaseDiablito(${i},this.value)">
+          <button class="btn-del-extra" onclick="deleteBaseDiablito(${i})">✕</button>
+        </div>`).join('')}
+      </div>
+      <button class="btn-add-extra" onclick="addBaseDiablito()">+ Base diablito</button>
+
+      <p style="font-size:12px;font-weight:700;color:var(--texto);margin:12px 0 6px;">Botanas</p>
+      <div id="admin-botanas-items">
+        ${MENU.botanas.items.map((e,i)=>`<div class="admin-extra-item">
+          <input type="text" value="${e}" onchange="updateBotana(${i},this.value)">
+          <button class="btn-del-extra" onclick="deleteBotana(${i})">✕</button>
+        </div>`).join('')}
+      </div>
+      <button class="btn-add-extra" onclick="addBotana()">+ Botana</button>
+
+      <button class="btn-save-admin" onclick="guardarMenu()" style="margin-top:14px">💾 Guardar todo</button>
+    </div>
+
+    <button class="btn-logout-admin" onclick="logoutAdmin()">🔒 Cerrar sesión admin</button>
+  </div>`;
+}
+
+function setAdminTab(idx, btn) {
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('activo'));
+  document.querySelectorAll('.admin-tab-content').forEach(t=>t.classList.remove('activo'));
+  btn.classList.add('activo');
+  document.getElementById('atab-'+idx).classList.add('activo');
+}
+
+// ═══ GUARDAR DATOS ═══
+function guardarPrecios() {
+  P.clasico = parseInt(document.getElementById('admin-clasico').value) || DEFAULT_MENU.precios.clasico;
+  P.glorias = parseInt(document.getElementById('admin-glorias').value) || DEFAULT_MENU.precios.glorias;
+  P.diablito = parseInt(document.getElementById('admin-diablito').value) || DEFAULT_MENU.precios.diablito;
+  P.botana = parseInt(document.getElementById('admin-botana').value) || DEFAULT_MENU.precios.botana;
+  P.extra = parseInt(document.getElementById('admin-extra').value) || DEFAULT_MENU.precios.extra;
+  MENU.precios = P;
+  localStorage.setItem('didxsaj_menu', JSON.stringify(MENU));
+  renderMenu();
+  actualizarResumen();
+  const msg = document.getElementById('admin-saved-msg');
+  msg.style.display = 'block';
+  setTimeout(()=>msg.style.display='none', 2000);
+}
+
+function guardarMenu() {
+  localStorage.setItem('didxsaj_menu', JSON.stringify(MENU));
+  localStorage.setItem('didxsaj_imgs', JSON.stringify(IMGS));
+  renderMenu();
+  actualizarResumen();
+  renderAdmin();
+  alert('✅ ¡Cambios guardados! El menú se ha actualizado.');
+}
+
+// ═══ SABORES ADMIN ═══
+function updateSabor(idx, field, val) { MENU.sabores[idx][field] = val; }
+function deleteSabor(idx) {
+  if(MENU.sabores.length <= 1) { alert('⚠️ Debe haber al menos un sabor.'); return; }
+  const sid = MENU.sabores[idx].id;
+  MENU.sabores.splice(idx, 1);
+  delete IMGS['sabor_'+sid];
+  guardarMenu();
+}
+function addSabor() {
+  const newId = 'sabor_' + Date.now();
+  MENU.sabores.push({ id:newId, nombre:'Nuevo sabor', emoji:'🍧', color:'#e74c3c', bg:'linear-gradient(135deg,#ffeaea,#fff8e1)', desc:'Descripción del nuevo sabor', img:'' });
+  guardarMenu();
+}
+
+// ═══ EXTRAS ADMIN ═══
+function updateExtraClasico(idx,val) { MENU.extrasClasico[idx] = val; }
+function deleteExtraClasico(idx) { MENU.extrasClasico.splice(idx,1); guardarMenu(); }
+function addExtraClasico() { MENU.extrasClasico.push('✨ Nuevo extra'); guardarMenu(); }
+
+function updateExtraDiablito(idx,val) { MENU.diablito.extras[idx] = val; }
+function deleteExtraDiablito(idx) { MENU.diablito.extras.splice(idx,1); guardarMenu(); }
+function addExtraDiablito() { MENU.diablito.extras.push('✨ Nuevo extra'); guardarMenu(); }
+
+function updateExtraGlorias(idx,val) { MENU.glorias.extras[idx] = val; }
+function deleteExtraGlorias(idx) { MENU.glorias.extras.splice(idx,1); guardarMenu(); }
+function addExtraGlorias() { MENU.glorias.extras.push('✨ Nuevo extra'); guardarMenu(); }
+
+function updateBaseDiablito(idx,val) { MENU.diablito.bases[idx] = val; }
+function deleteBaseDiablito(idx) { MENU.diablito.bases.splice(idx,1); guardarMenu(); }
+function addBaseDiablito() { MENU.diablito.bases.push('🫙 Nueva base'); guardarMenu(); }
+
+function updateBotana(idx,val) { MENU.botanas.items[idx] = val; }
+function deleteBotana(idx) { MENU.botanas.items.splice(idx,1); guardarMenu(); }
+function addBotana() { MENU.botanas.items.push('🍿 Nueva botana'); guardarMenu(); }
+
+// ═══ IMÁGENES (upload base64) ═══
+function uploadImg(key, input) {
+  const file = input.files[0];
+  if(!file) return;
+  // Limitar tamaño: máx 500KB por imagen (base64 = ~1.3x tamaño)
+  if(file.size > 500000) {
+    alert('⚠️ La imagen es muy grande (máximo 500KB). Por favor reduce el tamaño.');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    IMGS[key] = e.target.result;
+    localStorage.setItem('didxsaj_imgs', JSON.stringify(IMGS));
+    // Actualizar preview
+    const preview = document.getElementById('aip-'+key);
+    if(preview) preview.innerHTML = '<img src="'+e.target.result+'">';
+    // Si es logo, actualizar también el header
+    if(key === 'logo') {
+      const logoEl = document.getElementById('logo-img');
+      logoEl.src = e.target.result;
+      logoEl.style.display = 'block';
+      logoEl.nextElementSibling.style.display = 'none';
+    }
+    renderMenu();
+  };
+  reader.readAsDataURL(file);
+}
+
+// ═══ ADMIN LOGIN ═══
 function abrirLoginAdmin() {
   if(isAdmin) return;
   document.getElementById('admin-overlay').classList.add('visible');
@@ -1170,11 +1366,7 @@ function loginAdmin() {
     document.getElementById('admin-float-btn').classList.add('logged-in');
     document.getElementById('admin-float-btn').textContent = '✅';
     document.getElementById('admin-section').style.display = 'block';
-    document.getElementById('admin-clasico').value = P.clasico;
-    document.getElementById('admin-glorias').value = P.glorias;
-    document.getElementById('admin-diablito').value = P.diablito;
-    document.getElementById('admin-botana').value = P.botana;
-    document.getElementById('admin-extra').value = P.extra;
+    renderAdmin();
     document.getElementById('admin-section').scrollIntoView({behavior:'smooth'});
   } else {
     document.getElementById('admin-error').style.display = 'block';
@@ -1185,19 +1377,6 @@ function logoutAdmin() {
   document.getElementById('admin-float-btn').classList.remove('logged-in');
   document.getElementById('admin-float-btn').textContent = '⚙️';
   document.getElementById('admin-section').style.display = 'none';
-}
-function guardarPrecios() {
-  P.clasico = parseInt(document.getElementById('admin-clasico').value) || DEFAULT_P.clasico;
-  P.glorias = parseInt(document.getElementById('admin-glorias').value) || DEFAULT_P.glorias;
-  P.diablito = parseInt(document.getElementById('admin-diablito').value) || DEFAULT_P.diablito;
-  P.botana = parseInt(document.getElementById('admin-botana').value) || DEFAULT_P.botana;
-  P.extra = parseInt(document.getElementById('admin-extra').value) || DEFAULT_P.extra;
-  localStorage.setItem('didxsaj_precios', JSON.stringify(P));
-  aplicarPrecios();
-  actualizarResumen();
-  const msg = document.getElementById('admin-saved-msg');
-  msg.style.display = 'block';
-  setTimeout(()=>msg.style.display='none', 2000);
 }
 
 // ═══ SELECCIONES ═══
@@ -1210,6 +1389,7 @@ function toggleBotana(el, nombre) { el.classList.toggle('activo'); actualizarRes
 
 function cambiarCant(prod, d) {
   const el = document.getElementById('cant-'+prod);
+  if(!el) return;
   let v = parseInt(el.textContent)+d;
   if(v<0) v=0;
   el.textContent = v;
@@ -1217,6 +1397,7 @@ function cambiarCant(prod, d) {
 }
 function agregarItem(prod) {
   const el = document.getElementById('cant-'+prod);
+  if(!el) return;
   let v = parseInt(el.textContent);
   if(v===0) { el.textContent = 1; }
   actualizarResumen();
@@ -1242,20 +1423,13 @@ function actualizarResumen() {
   const items = []; let total = 0;
 
   // Sabores clásicos
-  const sabores = [
-    {id:'fresa', nombre:'🍓 Fresa', color:'#DC143C'},
-    {id:'limon', nombre:'🍋 Limón', color:'#6B8E23'},
-    {id:'pina', nombre:'🍍 Piña', color:'#FFD700'},
-    {id:'mora', nombre:'🫐 Mora azul', color:'#5B4FCF'},
-    {id:'nanche', nombre:'🌿 Nanche', color:'#DAA520'},
-  ];
-  let totalClasico = 0;
-  let totalClasicoQty = 0;
-  let clasicoNombres = [];
-  sabores.forEach(s => {
-    const c = parseInt(document.getElementById('cant-'+s.id).textContent);
+  let totalClasico = 0, totalClasicoQty = 0, clasicoNombres = [];
+  MENU.sabores.forEach(s => {
+    const el = document.getElementById('cant-'+s.id);
+    if(!el) return;
+    const c = parseInt(el.textContent);
     if(c>0) {
-      clasicoNombres.push(c+'x '+s.nombre);
+      clasicoNombres.push(c+'x '+s.emoji+' '+s.nombre);
       totalClasicoQty += c;
       totalClasico += c * P.clasico;
     }
@@ -1270,7 +1444,8 @@ function actualizarResumen() {
   }
 
   // Diablito
-  const cd = parseInt(document.getElementById('cant-diablito').textContent);
+  const cantDEl = document.getElementById('cant-diablito');
+  const cd = cantDEl ? parseInt(cantDEl.textContent) : 0;
   if(cd>0){
     const b = document.querySelector('#bd-diablito .base-btn.activo');
     const base = b ? b.textContent.trim() : '(sin base)';
@@ -1282,7 +1457,8 @@ function actualizarResumen() {
   }
 
   // Glorias
-  const cg = parseInt(document.getElementById('cant-glorias').textContent);
+  const cantGEl = document.getElementById('cant-glorias');
+  const cg = cantGEl ? parseInt(cantGEl.textContent) : 0;
   if(cg>0){
     const ex = getExtras('eg-glorias');
     const exCost = getExtrasCount('eg-glorias') * P.extra;
@@ -1315,31 +1491,28 @@ function enviarWA(){
   const lineas=[];
   let total=0;
 
-  const sabores = [
-    {id:'fresa', nombre:'Fresa'},
-    {id:'limon', nombre:'Limón'},
-    {id:'pina', nombre:'Piña'},
-    {id:'mora', nombre:'Mora azul'},
-    {id:'nanche', nombre:'Nanche'},
-  ];
   let hayPedido = false;
-  sabores.forEach(s => {
-    const c = parseInt(document.getElementById('cant-'+s.id).textContent);
+  MENU.sabores.forEach(s => {
+    const el = document.getElementById('cant-'+s.id);
+    if(!el) return;
+    const c = parseInt(el.textContent);
     if(c>0) hayPedido=true;
   });
-  const cd = parseInt(document.getElementById('cant-diablito').textContent);
-  const cg = parseInt(document.getElementById('cant-glorias').textContent);
+  const cantDEl = document.getElementById('cant-diablito');
+  const cantGEl = document.getElementById('cant-glorias');
+  const cd = cantDEl ? parseInt(cantDEl.textContent) : 0;
+  const cg = cantGEl ? parseInt(cantGEl.textContent) : 0;
   const bots = Array.from(document.querySelectorAll('#botanas-grid .botana-btn.activo'));
   if(!hayPedido && !cd && !cg && !bots.length){ alert('😅 ¡Elige al menos un producto antes de enviar tu pedido!'); return; }
 
   // Clásicos
   const exClasico = getExtras('eg-clasico');
   const exClasicoCost = getExtrasCount('eg-clasico') * P.extra;
-  let clasicoTotal = 0;
-  let clasicoQty = 0;
-  let clasicoNombres = [];
-  sabores.forEach(s => {
-    const c = parseInt(document.getElementById('cant-'+s.id).textContent);
+  let clasicoTotal = 0, clasicoQty = 0, clasicoNombres = [];
+  MENU.sabores.forEach(s => {
+    const el = document.getElementById('cant-'+s.id);
+    if(!el) return;
+    const c = parseInt(el.textContent);
     if(c>0) { clasicoNombres.push(c+'x '+s.nombre); clasicoQty+=c; clasicoTotal+=c*P.clasico; }
   });
   if(clasicoQty>0){
@@ -1382,6 +1555,9 @@ function enviarWA(){
     +'\n\n💰 *TOTAL ESTIMADO: $'+total+'*\n\n¡Muchas gracias! 🧊😋';
   window.open('https://wa.me/52'+NUMERO+'?text='+encodeURIComponent(msg),'_blank');
 }
+
+// ═══ INIT ═══
+renderMenu();
 </script>
 </body>
 </html>
