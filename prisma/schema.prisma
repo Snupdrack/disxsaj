@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model MenuConfig {
+  id             String   @id @default("main")
+  logoImg        String   @default("")
+  diablitoImg    String   @default("diablito.jpeg")
+  gloriasImg     String   @default("glorias2.jpeg")
+  botanasImg     String   @default("botanas.jpeg")
+  precioClasico  Int      @default(25)
+  precioGlorias  Int      @default(27)
+  precioDiablito Int      @default(27)
+  precioBotana   Int      @default(12)
+  precioExtra    Int      @default(2)
+  diablitoDesc   String   @default("Clásico de Tamarindo, Nanche o Durazno, cargado con chamoy, salsa botanera y Tajín. ¡Pica pero sabe rico!")
+  gloriasDesc    String   @default("Sabor de fresa con plátano, leche, lechera y ese toque especial. ¡El favorito de la casa!")
+  updatedAt      DateTime @updatedAt
+}
+
+model Sabor {
+  id     String @id @default(cuid())
+  nombre String
+  emoji  String @default("🍧")
+  color  String @default("#e74c3c")
+  bg     String @default("linear-gradient(135deg,#ffeaea,#fff8e1)")
+  desc   String @default("")
+  img    String @default("")
+  orden  Int    @default(0)
+}
+
+model ExtraClasico {
+  id     String @id @default(cuid())
+  nombre String
+  orden  Int    @default(0)
+}
+
+model ExtraDiablito {
+  id     String @id @default(cuid())
+  nombre String
+  orden  Int    @default(0)
+}
+
+model ExtraGloria {
+  id     String @id @default(cuid())
+  nombre String
+  orden  Int    @default(0)
+}
+
+model BaseDiablito {
+  id     String @id @default(cuid())
+  nombre String
+  orden  Int    @default(0)
+}
+
+model Botana {
+  id     String @id @default(cuid())
+  nombre String
+  orden  Int    @default(0)
+}
