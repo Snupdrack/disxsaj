@@ -10,6 +10,9 @@ WORKDIR /app
 COPY package.json package-lock.json* bun.lock* ./
 COPY prisma ./prisma/
 
+# Usar schema PostgreSQL para producción
+COPY prisma/schema.postgres.prisma prisma/schema.prisma
+
 RUN npm install --legacy-peer-deps
 RUN npx prisma generate
 
@@ -20,9 +23,11 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN npx prisma generate
+# Usar schema PostgreSQL para producción
+COPY prisma/schema.postgres.prisma prisma/schema.prisma
 
 ENV NEXT_TELEMETRY_DISABLED=1
+RUN npx prisma generate
 RUN npm run build
 
 # ─── Runner ───
@@ -41,7 +46,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# node_modules COMPLETO para migraciones y seed en runtime
+# node_modules completo para migraciones y seed en runtime
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
 
