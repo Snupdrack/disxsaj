@@ -1,6 +1,4 @@
 # ─── Raspados Didxsaj - Docker TODO-en-uno ───
-# Railway: conecta repo + agrega PostgreSQL = listo
-# El start.sh hace migraciones + seed + servidor automáticamente
 
 FROM node:20-alpine AS base
 
@@ -34,6 +32,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
+RUN apk add --no-cache libc6-compat
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
@@ -42,26 +41,18 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# Prisma runtime (cliente + migraciones + seed)
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+# node_modules COMPLETO para migraciones y seed en runtime
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
 
-# Herramientas necesarias para migraciones y seed
-COPY --from=builder /app/node_modules/typescript ./node_modules/typescript
-COPY --from=builder /app/node_modules/tsx ./node_modules/tsx
-
-# Script de inicio automático
+# Script de inicio
 COPY --from=builder /app/start.sh ./start.sh
 RUN chmod +x ./start.sh
 
 USER nextjs
 
 EXPOSE 3000
-
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# start.sh = migrate deploy + seed + node server.js
 CMD ["sh", "start.sh"]
