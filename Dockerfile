@@ -54,6 +54,7 @@ COPY --from=builder /app/node_modules/tsx ./node_modules/tsx
 
 # Script de inicio automático
 COPY --from=builder /app/start.sh ./start.sh
+RUN chmod +x ./start.sh
 
 USER nextjs
 
