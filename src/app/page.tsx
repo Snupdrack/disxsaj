@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback, useRef } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 
 /* ─── Types ─── */
 interface MenuConfig {
@@ -96,6 +96,10 @@ export default function Home() {
   // Glorias state
   const [gloriasQty, setGloriasQty] = useState(0)
   const [gloriasExtras, setGloriasExtras] = useState<string[]>([])
+
+  // Gloria de Chicle state
+  const [chicleQty, setChicleQty] = useState(0)
+  const [chicleExtras, setChicleExtras] = useState<string[]>([])
 
   // Sabores state
   const [saborQty, setSaborQty] = useState<Record<string, number>>({})
@@ -927,6 +931,81 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          {/* GLORIA DE CHICLE */}
+          <div style={{ borderRadius: 'var(--radius-card)', background: 'white', boxShadow: 'var(--sombra)', overflow: 'hidden', border: '2.5px solid #e8e8e8', marginTop: '20px', transition: '0.2s' }}>
+            <div className="relative w-full overflow-hidden" style={{ height: '210px', background: 'white' }}>
+              <img src="/uploads/gloria-chicle.jpg" alt="Gloria de Chicle" className="w-full h-full object-cover block"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; ((e.target as HTMLImageElement).nextElementSibling as HTMLDivElement).style.display = 'flex'; }} />
+              <div className="w-full h-full flex flex-col items-center justify-center"
+                style={{ display: 'none', background: 'linear-gradient(135deg, #e0f7ff, #f0e6ff)', fontSize: '48px', gap: '6px' } as React.CSSProperties}>
+                <div>😁🫧</div>
+                <p style={{ fontFamily: 'var(--font-poppins)', fontSize: '12px', color: 'var(--texto-muted)', fontWeight: 600 }}>Gloria de Chicle</p>
+              </div>
+              <div className="absolute" style={{ top: '12px', right: '12px', padding: '6px 16px', borderRadius: 'var(--radius-pill)', fontFamily: 'var(--font-fredoka)', fontWeight: 700, fontSize: '20px', color: 'white', boxShadow: '0 4px 14px rgba(0,200,255,0.4)', background: '#00c8ff' }}>
+                $27
+              </div>
+            </div>
+            <div style={{ padding: '20px' }}>
+              <div style={{ marginBottom: '12px' }}>
+                <h3 style={{ fontFamily: 'var(--font-fredoka)', fontSize: '20px', fontWeight: 700, color: '#00c8ff' }}>😁 Gloria de Chicle</h3>
+                <p style={{ fontSize: '14px', color: 'var(--texto-muted)', lineHeight: 1.5, marginTop: '4px' }}>
+                  Jarabe de chicle, leche, plátano, lechera y mini chicles. ¡Dulce, cremosa y divertida!
+                </p>
+              </div>
+              <div style={{ marginBottom: '12px' }}>
+                <div style={{ fontSize: '13px', color: 'var(--texto-muted)', marginBottom: '8px' }}>✨ Extras (+${C.precioExtra} c/u):</div>
+                <div className="flex flex-wrap gap-2" style={{ marginBottom: '12px' }}>
+                  {['🥛 Extra Lechera', '🍌 Más Plátano'].map(extra => (
+                    <div key={extra}
+                      className="flex items-center cursor-pointer select-none"
+                      style={{
+                        gap: '5px', padding: '8px 12px',
+                        border: `2px solid ${chicleExtras.includes(extra) ? '#00c8ff' : '#e8e8e8'}`,
+                        borderRadius: 'var(--radius-pill)',
+                        background: chicleExtras.includes(extra) ? '#e0f7ff' : 'white',
+                        fontFamily: 'var(--font-poppins)', fontSize: '12px', fontWeight: 600,
+                        color: chicleExtras.includes(extra) ? '#00c8ff' : 'var(--texto)',
+                        transition: '0.18s', userSelect: 'none',
+                      }}
+                      onClick={() => toggleExtra(chicleExtras, setChicleExtras, extra)}
+                    >
+                      <div className="flex items-center justify-center flex-shrink-0" style={{
+                        width: '16px', height: '16px', borderRadius: '50%',
+                        border: `2px solid ${chicleExtras.includes(extra) ? '#00c8ff' : '#ccc'}`,
+                        background: chicleExtras.includes(extra) ? '#00c8ff' : 'white',
+                        transition: '0.18s',
+                      }}>
+                        {chicleExtras.includes(extra) && CHK_SVG}
+                      </div>
+                      {extra}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <span style={{ fontFamily: 'var(--font-fredoka)', fontSize: '16px', color: 'var(--texto)' }}>Cantidad</span>
+                <div className="flex items-center" style={{ gap: '12px' }}>
+                  <button className="flex items-center justify-center cursor-pointer"
+                    onClick={() => setChicleQty(Math.max(0, chicleQty - 1))}
+                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #e8e8e8', background: 'white', fontSize: '20px', fontWeight: 700, color: 'var(--texto-muted)', transition: '0.15s' }}>−</button>
+                  <span style={{ fontFamily: 'var(--font-fredoka)', fontSize: '20px', color: 'var(--texto)', minWidth: '24px', textAlign: 'center' }}>{chicleQty}</span>
+                  <button className="flex items-center justify-center cursor-pointer"
+                    onClick={() => setChicleQty(chicleQty + 1)}
+                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #e8e8e8', background: 'white', fontSize: '20px', fontWeight: 700, color: 'var(--texto-muted)', transition: '0.15s' }}>+</button>
+                </div>
+                <button className="cursor-pointer"
+                  onClick={() => {
+                    addToOrder('glorias', '😁 Gloria de Chicle', 27, chicleQty, chicleExtras)
+                    setChicleQty(0)
+                    setChicleExtras([])
+                  }}
+                  style={{ padding: '10px 22px', border: 'none', borderRadius: 'var(--radius-pill)', fontFamily: 'var(--font-fredoka)', fontSize: '14px', fontWeight: 700, color: 'white', background: '#00c8ff', boxShadow: '0 4px 14px rgba(0,200,255,0.35)', transition: '0.18s', cursor: 'pointer' }}>
+                  Agregar
+                </button>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ═══ NUESTROS SABORES ═══ */}
@@ -948,7 +1027,7 @@ export default function Home() {
                 <div className="flex flex-col justify-between flex-1 min-w-0" style={{ padding: '12px' }}>
                   <div>
                     <h3 className="truncate" style={{ fontFamily: 'var(--font-fredoka)', fontSize: '15px', fontWeight: 700, color: s.color }}>{s.emoji} {s.nombre}</h3>
-                    <p className="line-clamp-2" style={{ fontSize: '12px', color: 'var(--texto-muted)', marginTop: '2px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{s.desc}</p>
+                    <p className="line-clamp-2" style={{ fontSize: '12px', color: 'var(--texto-muted)', marginTop: '2px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' } as React.CSSProperties}>{s.desc}</p>
                   </div>
                   <div className="flex items-center justify-between" style={{ marginTop: '8px' }}>
                     <span style={{ fontFamily: 'var(--font-fredoka)', fontSize: '18px', fontWeight: 700, color: s.color }}>${C.precioClasico}</span>
