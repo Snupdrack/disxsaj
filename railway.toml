@@ -1,10 +1,30 @@
+# ═══════════════════════════════════════════════════════
+# Raspados Didxsaj - Configuración Railway
+#
+# INSTRUCCIONES:
+# 1. Conecta tu repo de GitHub
+# 2. Agrega PostgreSQL: "+ New" → "Database" → "PostgreSQL"
+# 3. Railway conecta automáticamente el DATABASE_URL
+# 4. ¡Listo! Se despliega solo
+#
+# Variables de entorno que PUEDES configurar (opcional):
+#   ADMIN_PASSWORD  → Contraseña del admin (default: didxsaj2024)
+#   ADMIN_TOKEN     → Token de sesión (default: didxsaj-admin-2024-token)
+# ═══════════════════════════════════════════════════════
+
 [build]
 builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "node server.js"
+startCommand = "sh start.sh"
 healthcheckPath = "/api/menu"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
+
+# Variables de entorno con defaults
+[deploy.env]
+ADMIN_PASSWORD = "didxsaj2024"
+ADMIN_TOKEN = "didxsaj-admin-2024-token"
+NEXT_PUBLIC_WA_NUMBER = "5219512645961"
