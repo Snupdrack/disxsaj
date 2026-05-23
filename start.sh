@@ -10,7 +10,7 @@ echo ""
 
 # ─── 1. Ejecutar migraciones ───
 echo "🗄️ Ejecutando migraciones..."
-./node_modules/.bin/prisma migrate deploy
+node node_modules/prisma/build/index.js migrate deploy
 
 # ─── 2. Seed (solo si la base de datos está vacía) ───
 echo "🌱 Verificando datos iniciales..."
@@ -24,7 +24,7 @@ p.menuConfig.findUnique({ where: { id: 'main' } })
 
 if [ "$HAS_DATA" = "no" ]; then
   echo "🌱 Base de datos vacía, ejecutando seed..."
-  ./node_modules/.bin/tsx prisma/seed.ts
+  node node_modules/tsx/dist/cli.mjs prisma/seed.ts
 else
   echo "✅ Base de datos ya tiene datos, saltando seed."
 fi
